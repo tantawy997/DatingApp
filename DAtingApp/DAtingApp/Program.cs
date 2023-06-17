@@ -1,5 +1,10 @@
 using DatingApp.Data;
+using DAtingApp.extensions;
+using DAtingApp.interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace DAtingApp
 {
@@ -11,18 +16,15 @@ namespace DAtingApp
 
 
 			// Add services to the container.
-			builder.Services.AddAuthorization();
-			builder.Services.AddDbContext<DataContext>(o =>
-			{
-				o.UseSqlServer(builder.Configuration.GetConnectionString("co1"));
 
-			});
-
+			builder.Services.AddApplicationService(builder.Configuration);
 			builder.Services.AddControllers();
 
+			builder.Services.AddIdentityService(builder.Configuration);
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
+			
 			builder.Services.AddCors(options =>
 			{
 				options.AddPolicy("AllowAll",
@@ -51,6 +53,7 @@ namespace DAtingApp
 
 			app.UseHttpsRedirection();
 
+			app.UseAuthentication();
 			app.UseAuthorization();
 
 			

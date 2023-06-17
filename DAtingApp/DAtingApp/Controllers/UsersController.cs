@@ -1,6 +1,7 @@
 ﻿using DatingApp.Data;
 using DatingApp.Entites;
 using DAtingApp.Controllers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,6 +25,7 @@ namespace DatingApp.Controller
 
 			return Ok(Users);
 		}
+		[Authorize]
 		[HttpGet("{id}")]
 		public async Task<ActionResult<AppUser>> GetUser(int id)
 		{
@@ -40,21 +42,8 @@ namespace DatingApp.Controller
 			return Ok(User);
 
 		}
-		[HttpPost("CreateUser")]
 
-		public async Task<ActionResult<AppUser>> CreateUser(AppUser appUser)
-		{
-			AppUser User = await _Context.Users.FirstOrDefaultAsync(u => u.id == appUser.id);
-			if (User != null)
-			{
-				return BadRequest();
-			}
 
-			var user= await _Context.Users.AddAsync(appUser);
-			await _Context.SaveChangesAsync();
-
-			return Ok(user);
-		}
 	}
 
 }
