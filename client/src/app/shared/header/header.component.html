@@ -1,0 +1,64 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">Dating App</a>
+
+    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          aria-current="page"
+          *ngIf="AccountService.loggedIn"
+          href="#"
+          >Matches</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" *ngIf="AccountService.loggedIn">Lists</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" *ngIf="AccountService.loggedIn">Messages</a>
+      </li>
+    </ul>
+
+    <div class="dropdown">
+      <button
+        mat-button
+        [matMenuTriggerFor]="menu"
+        *ngIf="AccountService.loggedIn"
+        class="text-light dropdown-toggle"
+      >
+        welcome user
+      </button>
+      <mat-menu #menu="matMenu" class="dropdown-menu">
+        <button mat-menu-item (click)="logout()" class="dropdown-item">
+          logout
+        </button>
+        <button mat-menu-item class="dropdown-item">edit profile</button>
+      </mat-menu>
+    </div>
+
+    <form
+      #loginForm="ngForm"
+      (ngSubmit)="login()"
+      *ngIf="!AccountService.loggedIn"
+      class="d-flex"
+      autocomplete="off"
+    >
+      <input
+        class="form-control me-2"
+        type="text"
+        placeholder="username"
+        name="userName"
+        [(ngModel)]="user.userName"
+      />
+      <input
+        class="form-control me-2"
+        type="password"
+        placeholder="password"
+        name="password"
+        [(ngModel)]="user.password"
+      />
+      <button class="btn btn-outline-success" type="submit">login</button>
+    </form>
+  </div>
+</nav>

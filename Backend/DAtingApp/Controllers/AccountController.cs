@@ -24,7 +24,7 @@ namespace DAtingApp.Controllers
 			TokenService = tokenService;
 		}
 
-		[HttpPost("Register")]
+		[HttpPost("register")]
 		
 		public async Task<ActionResult<UserDTO>> Register(RegisterDTO userDTO)
 		{
