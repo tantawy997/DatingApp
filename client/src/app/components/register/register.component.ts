@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/Models/user';
 import { AccountService } from 'src/app/Services/Account.service';
 
@@ -15,7 +16,11 @@ export class RegisterComponent {
   /**
    *
    */
-  constructor(public AccountService: AccountService, private router: Router) {}
+  constructor(
+    public AccountService: AccountService,
+    private router: Router,
+    private toaster: ToastrService
+  ) {}
   cancel() {
     this.cancelRegister.emit(false);
   }
@@ -24,10 +29,11 @@ export class RegisterComponent {
     this.AccountService.register(this.user).subscribe(
       (response) => {
         console.log(response);
+        this.toaster.success('you registered successfully');
         this.cancel();
       },
       (e) => {
-        console.log(e.message);
+        this.toaster.error(e.message);
       }
     );
 

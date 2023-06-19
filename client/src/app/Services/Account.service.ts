@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment.development';
 import { User } from '../Models/user';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, map } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ export class AccountService {
   userSubject: Subject<User | null> = new Subject<User | null>();
   CurrentUser: Observable<User | null> = this.userSubject.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private toaster: ToastrService) {
     this.BaseApi = environment.BaseApi;
     this.token = JSON.parse(localStorage.getItem('token')!);
     this.CurrentUser = JSON.parse(localStorage.getItem('user')!);
@@ -37,13 +38,13 @@ export class AccountService {
             localStorage.setItem('token', JSON.stringify(res.token));
             localStorage.setItem('user', JSON.stringify(res));
           }
-
+          this.toaster.success('welcome ' + res.userName);
           this.userSubject.next(res);
           this.loggedIn = true;
           // console.log(this.loggedIn);
         },
         (e) => {
-          console.log(e.message);
+          this.toaster.error(e.message);
         }
       );
   }
@@ -59,7 +60,6 @@ export class AccountService {
             localStorage.setItem('user', JSON.stringify(response));
             this.userSubject.next(user);
             this.loggedIn = true;
-
             return response;
           }
         })
@@ -69,9 +69,9 @@ export class AccountService {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-
     this.userSubject.next(null);
     this.loggedIn = false;
+    this.toaster.info('logged out successfully');
   }
 
   setCurrentUser(user: User) {
