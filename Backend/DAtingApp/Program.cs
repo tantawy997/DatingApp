@@ -1,6 +1,7 @@
 using DatingApp.Data;
 using DAtingApp.extensions;
 using DAtingApp.interfaces;
+using DAtingApp.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -40,7 +41,7 @@ namespace DAtingApp
 			builder.Services.AddHttpContextAccessor();
 
 			var app = builder.Build();
-
+			app.UseMiddleware<ExceptionMiddleware>();
 			// Configure the HTTP request pipeline.
 			if (app.Environment.IsDevelopment())
 			{

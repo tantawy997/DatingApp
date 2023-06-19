@@ -33,7 +33,7 @@ export class RegisterComponent {
         this.cancel();
       },
       (e) => {
-        this.toaster.error(e.message);
+        this.toaster.error(e.status);
       }
     );
 
