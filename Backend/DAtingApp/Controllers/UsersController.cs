@@ -1,49 +1,72 @@
-﻿using DatingApp.Data;
+﻿using AutoMapper;
+using DatingApp.Data;
 using DatingApp.Entites;
 using DAtingApp.Controllers;
+using DAtingApp.DTOs;
+using DAtingApp.interfaces.repositoryInterfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatingApp.Controller
 {
+	[Authorize]
 	public class UsersController : ApiControllerBase
 	{
-		private readonly DataContext _Context;
+		private readonly IUserRepo _UserRepo;
+		private readonly IMapper _Mapper;
 
-		public UsersController(DataContext dataContext)
+		public UsersController(IUserRepo userRepo,IMapper mapper)
 		{
-			_Context = dataContext;
+			_UserRepo = userRepo;
+			_Mapper = mapper;
 		}
 
 
 		[HttpGet("GetUsers")]
 
-		public async Task<ActionResult<IEnumerable<AppUser>>> GetAllUsers()
+		public async Task<ActionResult<IEnumerable<MemberDTO>>> GetAllUsers()
 		{
-			IEnumerable<AppUser> Users = await _Context.Users.ToListAsync();
-
+			var Users = await _UserRepo.GetMembersAsync();
+			//var usersDTO = _Mapper.Map<IEnumerable<MemberDTO>>(Users);
 			return Ok(Users);
 		}
-		[Authorize]
-		[HttpGet("{id}")]
-		public async Task<ActionResult<AppUser>> GetUser(int id)
+		
+		//[HttpGet("{id}")]
+		//public async Task<ActionResult<MemberDTO>> GetUserById(Guid id)
+		//{
+		//	AppUser User = await _UserRepo.GetUserByIdAsync(id);
+			
+
+		//	if(User == null)
+		//	{
+		//		return NotFound();
+		//	}
+		//	var userdto = _Mapper.Map<AppUser, MemberDTO>(User);
+
+		//	return Ok(userdto);
+
+		//}
+
+		[HttpGet("{username}")]
+		public async Task<ActionResult<MemberDTO>> GetUserByUserName(string UserName)
 		{
-			if(id == 0)
+			if (UserName == null)
 			{
 				return BadRequest();
 			}
-			AppUser User =await _Context.Users.FirstOrDefaultAsync(u => u.id == id);
-			
-			if(User == null)
+
+			MemberDTO User = await _UserRepo.GetMemberAsync(UserName);
+
+			if (User == null)
 			{
 				return NotFound();
 			}
+			//var userdto = _Mapper.Map<AppUser, MemberDTO>(User);
+
 			return Ok(User);
 
 		}
-
-
 	}
 
 }

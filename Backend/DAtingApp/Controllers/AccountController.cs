@@ -41,7 +41,7 @@ namespace DAtingApp.Controllers
 				PasswordHah =  macHash.ComputeHash(Encoding.UTF8.GetBytes(userDTO.Password)),
 				PasswordSalt = macHash.Key
 			};
-			var checkUser = await _Context.Users.FirstOrDefaultAsync(a => a.id == user.id);
+			var checkUser = await _Context.Users.FirstOrDefaultAsync(a => a.UserId == user.UserId);
 
 			await _Context.AddAsync(user);
 			await _Context.SaveChangesAsync();

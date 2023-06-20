@@ -1,5 +1,7 @@
 ﻿using DatingApp.Data;
+using DAtingApp.Data.repositories;
 using DAtingApp.interfaces;
+using DAtingApp.interfaces.repositoryInterfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAtingApp.extensions
@@ -17,7 +19,7 @@ namespace DAtingApp.extensions
 
 			});
 			services.AddScoped<ITokenService, TokenSerivce>();
-
+			services.AddScoped<IUserRepo, UserRepo>();
 			return services;
 		}
 	}
