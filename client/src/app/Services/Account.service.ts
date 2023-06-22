@@ -45,7 +45,7 @@ export class AccountService {
         },
         (e) => {
           // this.toaster.error(e.status);
-          console.log(e.status);
+          console.log(e);
         }
       );
   }

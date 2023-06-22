@@ -13,10 +13,10 @@ namespace DAtingApp.extensions
 				var securityScheme = new OpenApiSecurityScheme
 				{
 					Description = "JWT auth bearer scheme",
-					Name = "Autherization",
+					Name = "Authorization",
 					In = ParameterLocation.Header,
 					Type = SecuritySchemeType.ApiKey,
-					Scheme = "bearer",
+					Scheme = "Bearer",
 					Reference = new OpenApiReference
 					{
 						Id = "Bearer",

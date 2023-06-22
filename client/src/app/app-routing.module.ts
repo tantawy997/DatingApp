@@ -14,7 +14,7 @@ const routes: Routes = [
   },
   { path: 'messages', component: MessagesComponent, canActivate: [authGuard] },
   { path: 'lists', component: ListsComponent, canActivate: [authGuard] },
-  { path: '**', component: HomeComponent, pathMatch: 'full' },
+  // { path: '**', component: HomeComponent, pathMatch: 'full' },
 ];
 
 @NgModule({

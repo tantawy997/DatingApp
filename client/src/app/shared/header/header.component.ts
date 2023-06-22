@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Member } from 'src/app/Models/member';
 import { User } from 'src/app/Models/user';
 import { AccountService } from 'src/app/Services/Account.service';
-import { UserService } from 'src/app/Services/user.service';
-
+import { MemberService } from 'src/app/Services/member.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -12,18 +12,14 @@ import { UserService } from 'src/app/Services/user.service';
 export class HeaderComponent implements OnInit {
   user: User = { id: 0, password: '', userName: '' };
   private loggedIn: boolean = false;
-  users: User[] = [];
+  users: Member[] = [];
   // username: string;
   constructor(
     public router: Router,
     public AccountService: AccountService,
-    private userServices: UserService
+    private MemberService: MemberService
   ) {}
-  ngOnInit() {
-    this.userServices.GetAllUsers().subscribe((response) => {
-      this.users = response;
-    });
-  }
+  ngOnInit() {}
 
   login() {
     console.log(this.user);

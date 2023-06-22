@@ -23,7 +23,7 @@
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/bootswatch/dist/Sandstone/bootstrap.css",
+              "node_modules/bootswatch/dist/united/bootstrap.css",
               "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []

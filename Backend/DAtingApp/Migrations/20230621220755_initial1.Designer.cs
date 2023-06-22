@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAtingApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230620032506_initial")]
-    partial class initial
+    [Migration("20230621220755_initial1")]
+    partial class initial1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
