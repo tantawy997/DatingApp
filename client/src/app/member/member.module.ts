@@ -9,12 +9,15 @@ import { MemberCardComponent } from './member-card/member-card.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+import { EditComponent } from './edit/edit.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
     MemberListComponent,
     MemberDetailsComponent,
     MemberCardComponent,
+    EditComponent,
   ],
   imports: [
     CommonModule,
@@ -24,7 +27,8 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
     FontAwesomeModule,
     MatTabsModule,
     NgxGalleryModule,
+    MatProgressSpinnerModule,
   ],
-  exports: [RouterModule],
+  exports: [RouterModule, MatProgressSpinnerModule],
 })
 export class MemberModule {}

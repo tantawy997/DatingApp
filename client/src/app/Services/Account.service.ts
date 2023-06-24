@@ -10,11 +10,11 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AccountService {
   private BaseApi: string;
-
+  user: User = {} as User;
   loggedIn: boolean = false;
   token: string;
   userSubject: Subject<User | null> = new Subject<User | null>();
-  CurrentUser: Observable<User | null> = this.userSubject.asObservable();
+  CurrentUser = this.userSubject.asObservable();
 
   constructor(private http: HttpClient, private toaster: ToastrService) {
     this.BaseApi = environment.BaseApi;
@@ -34,6 +34,7 @@ export class AccountService {
         (res: any) => {
           console.log(res.token);
           this.CurrentUser = res;
+          this.user = res;
           if (!localStorage.getItem('token')) {
             localStorage.setItem('token', JSON.stringify(res.token));
             localStorage.setItem('user', JSON.stringify(res));
@@ -56,7 +57,7 @@ export class AccountService {
       .pipe(
         map((response: any) => {
           if (response) {
-            this.CurrentUser = response;
+            //this.CurrentUser = response;
             localStorage.setItem('token', JSON.stringify(response.token));
             localStorage.setItem('user', JSON.stringify(response));
             this.userSubject.next(user);
