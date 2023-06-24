@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MemberListComponent } from './member-list/member-list.component';
 import { MemberDetailsComponent } from './member-details/member-details.component';
-import { authGuard } from '../Gaurds/auth.guard';
+import { authGuard } from '../Guards/auth.guard';
+import { EditComponent } from './edit/edit.component';
+import { preventBeforeSaveGuard } from '../Guards/prevent-before-save.guard';
 
 const routes: Routes = [
   {
@@ -14,6 +16,12 @@ const routes: Routes = [
     path: 'MembersList/:userName',
     component: MemberDetailsComponent,
     canActivate: [authGuard],
+  },
+  {
+    path: 'member/edit',
+    component: EditComponent,
+    canActivate: [authGuard],
+    canDeactivate: [preventBeforeSaveGuard],
   },
 ];
 
