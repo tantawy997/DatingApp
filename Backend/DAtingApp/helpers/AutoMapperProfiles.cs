@@ -21,8 +21,9 @@ namespace DAtingApp.helpers
 			CreateMap<Photo, PhotoDTO>()
 
 				.ReverseMap();
-				
 
+
+			CreateMap<UpdateUserDto, AppUser>().ReverseMap();
 
 		}
 

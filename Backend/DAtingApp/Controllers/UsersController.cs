@@ -7,6 +7,7 @@ using DAtingApp.interfaces.repositoryInterfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace DatingApp.Controller
 {
@@ -48,7 +49,7 @@ namespace DatingApp.Controller
 
 		//}
 
-		[HttpGet("{username}")]
+		[HttpGet("{UserName}")]
 		public async Task<ActionResult<MemberDTO>> GetUserByUserName(string UserName)
 		{
 			if (UserName == null)
@@ -66,6 +67,24 @@ namespace DatingApp.Controller
 
 			return Ok(User);
 
+		}
+		[HttpPut]
+		public async Task<ActionResult> UpdateUserAsync(UpdateUserDto updateUserDto)
+		{
+			var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+			var UserData = await _UserRepo.GetUserByUserNameAsync(username);
+
+			if (UserData == null) return NotFound();
+
+			_Mapper.Map(updateUserDto, UserData);
+
+			if (await _UserRepo.SaveAllAsync())
+			{
+				return NoContent();
+			}
+
+			return BadRequest("you have failed to update the data");
 		}
 	}
 
