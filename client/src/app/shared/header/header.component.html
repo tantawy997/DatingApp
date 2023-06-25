@@ -37,6 +37,7 @@
     </ul>
 
     <div class="dropdown" *ngIf="AccountService.loggedIn">
+      <img [src]="user.photoUrl || 'assets/user.png'" alt="main photo" />
       <button
         mat-button
         [matMenuTriggerFor]="menu"

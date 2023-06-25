@@ -11,6 +11,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { EditComponent } from './edit/edit.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { PhotoEditorComponent } from './photo-editor/photo-editor.component';
+import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MemberDetailsComponent,
     MemberCardComponent,
     EditComponent,
+    PhotoEditorComponent,
   ],
   imports: [
     CommonModule,
@@ -28,7 +31,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatTabsModule,
     NgxGalleryModule,
     MatProgressSpinnerModule,
+    FileUploadModule,
   ],
-  exports: [RouterModule, MatProgressSpinnerModule],
+  exports: [RouterModule, MatProgressSpinnerModule, FileUploadModule],
 })
 export class MemberModule {}

@@ -12,15 +12,15 @@ export class AccountService {
   private BaseApi: string;
   user: User = {} as User;
   loggedIn: boolean = false;
-  token: string;
+  token?: string = '';
   userSubject: Subject<User | null> = new Subject<User | null>();
-  CurrentUser = this.userSubject.asObservable();
+  CurrentUser$ = this.userSubject.asObservable();
 
   constructor(private http: HttpClient, private toaster: ToastrService) {
     this.BaseApi = environment.BaseApi;
     this.token = JSON.parse(localStorage.getItem('token')!);
-    this.CurrentUser = JSON.parse(localStorage.getItem('user')!);
-    if (this.token) {
+    this.user = JSON.parse(localStorage.getItem('user')!);
+    if (this?.token || this.user) {
       this.loggedIn = true;
     } else {
       this.loggedIn = false;
@@ -28,44 +28,37 @@ export class AccountService {
   }
 
   login(model: User) {
-    return this.http
-      .post<Observable<User>>(this.BaseApi + 'Account/login', model)
-      .subscribe(
-        (res: any) => {
-          console.log(res.token);
-          this.CurrentUser = res;
-          this.user = res;
-          if (!localStorage.getItem('token')) {
-            localStorage.setItem('token', JSON.stringify(res.token));
-            localStorage.setItem('user', JSON.stringify(res));
-          }
-          this.toaster.success('welcome ' + res.userName);
-          this.userSubject.next(res);
+    return this.http.post<User>(this.BaseApi + 'Account/login', model).pipe(
+      map((user: User) => {
+        if (user) {
+          this.user = user;
+          // console.log(user);
+          localStorage.setItem('token', JSON.stringify(user.token));
+          localStorage.setItem('user', JSON.stringify(user));
+          this.toaster.success('welcome ' + user.userName);
+          this.userSubject.next(user);
+
           this.loggedIn = true;
-          // console.log(this.loggedIn);
-        },
-        (e) => {
-          // this.toaster.error(e.status);
-          console.log(e);
         }
-      );
+        return user;
+      })
+    );
   }
 
   register(user: User) {
-    return this.http
-      .post<Observable<User>>(this.BaseApi + 'Account/register', user)
-      .pipe(
-        map((response: any) => {
-          if (response) {
-            //this.CurrentUser = response;
-            localStorage.setItem('token', JSON.stringify(response.token));
-            localStorage.setItem('user', JSON.stringify(response));
-            this.userSubject.next(user);
-            this.loggedIn = true;
-            return response;
-          }
-        })
-      );
+    return this.http.post<User>(this.BaseApi + 'Account/register', user).pipe(
+      map((response: User) => {
+        if (response) {
+          this.user = response;
+          localStorage.setItem('token', JSON.stringify(response.token));
+          localStorage.setItem('user', JSON.stringify(response));
+
+          this.userSubject.next(user);
+          this.loggedIn = true;
+        }
+        return response;
+      })
+    );
   }
 
   logout() {
@@ -77,6 +70,9 @@ export class AccountService {
   }
 
   setCurrentUser(user: User) {
+    //console.log(user);
+    localStorage.setItem('token', JSON.stringify(user.token));
+    localStorage.setItem('user', JSON.stringify(user));
     this.userSubject.next(user);
   }
 }

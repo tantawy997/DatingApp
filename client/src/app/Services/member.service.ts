@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Member } from '../Models/member';
 import { map, of } from 'rxjs';
+import { Photo } from '../Models/photo';
 
 @Injectable({
   providedIn: 'root',
@@ -48,5 +49,16 @@ export class MemberService {
         this.members[index] = { ...this.members[index], ...member };
       })
     );
+  }
+
+  SetMainPhoto(Photo: Photo) {
+    return this.http.put(
+      this.baseUrl + 'Users/set-main-photo/' + Photo.photoId,
+      {}
+    );
+  }
+
+  deletePhoto(photoId: string) {
+    return this.http.delete(this.baseUrl + 'Users/delete-photo/' + photoId);
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { take } from 'rxjs';
 import { Member } from 'src/app/Models/member';
 import { User } from 'src/app/Models/user';
 import { AccountService } from 'src/app/Services/Account.service';
@@ -10,7 +11,7 @@ import { MemberService } from 'src/app/Services/member.service';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  user: User = { id: 0, password: '', userName: '' };
+  user: User = {} as User;
   private loggedIn: boolean = false;
   users: Member[] = [];
   // username: string;
@@ -18,13 +19,23 @@ export class HeaderComponent implements OnInit {
     public router: Router,
     public AccountService: AccountService,
     private MemberService: MemberService
-  ) {}
-  ngOnInit() {}
+  ) {
+    this.AccountService.CurrentUser$.pipe(take(1)).subscribe((response) => {
+      if (response) this.user = response;
+    });
+  }
+  ngOnInit() {
+    this.AccountService.CurrentUser$.subscribe((response) => {
+      if (response) {
+        if (response) this.user = response;
+      }
+    });
+  }
 
   login() {
-    console.log(this.user);
-    this.AccountService.login(this.user);
-    this.router.navigateByUrl('/members/MembersList');
+    this.AccountService.login(this.user).subscribe((response) => {
+      this.router.navigateByUrl('/members/MembersList');
+    });
   }
 
   logout() {
@@ -32,9 +43,9 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
-  getCurrentUser() {
-    this.AccountService.CurrentUser.subscribe((res) => {
-      this.loggedIn = !!res;
-    });
-  }
+  // getCurrentUser() {
+  //   this.AccountService.CurrentUser$.subscribe((res) => {
+  //     this.loggedIn = !!res;
+  //   });
+  // }
 }

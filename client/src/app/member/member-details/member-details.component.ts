@@ -5,7 +5,11 @@ import {
   NgxGalleryImage,
   NgxGalleryOptions,
 } from '@kolkov/ngx-gallery';
+import { take } from 'rxjs';
+import { faArrowAltCircleRight } from '@fortawesome/free-regular-svg-icons';
 import { Member } from 'src/app/Models/member';
+import { User } from 'src/app/Models/user';
+import { AccountService } from 'src/app/Services/Account.service';
 import { MemberService } from 'src/app/Services/member.service';
 
 @Component({
@@ -16,19 +20,24 @@ import { MemberService } from 'src/app/Services/member.service';
 export class MemberDetailsComponent implements OnInit {
   member: Member = {} as Member;
   UserName!: string;
+  user: User = {} as User;
   galleryOptions: NgxGalleryOptions[] = [];
   galleryImages: NgxGalleryImage[] = [];
   constructor(
     private ActiveRoute: ActivatedRoute,
     private router: Router,
-    private MemberService: MemberService
-  ) {}
+    private MemberService: MemberService,
+    private AccountService: AccountService
+  ) {
+    this.AccountService.CurrentUser$.pipe(take(1)).subscribe((response) => {
+      if (response) this.user = response;
+    });
+  }
   ngOnInit() {
     let photos: any = [];
 
     this.ActiveRoute.paramMap.subscribe((res) => {
       this.UserName = res.get('userName') as string;
-      console.log(this.UserName);
       this.MemberService.GetMember(this.UserName).subscribe((response) => {
         this.member = response;
         for (const photo of this.member.photos) {
@@ -47,9 +56,12 @@ export class MemberDetailsComponent implements OnInit {
         width: '200px',
         height: '200px',
         imagePercent: 100,
-        thumbnailsColumns: 4,
+        thumbnailsColumns: 6,
         imageAnimation: NgxGalleryAnimation.Slide,
         preview: false,
+        imageArrows: true,
+        arrowPrevIcon: 'fa fa-arrow-circle-left',
+        arrowNextIcon: 'fa fa-arrow-circle-right',
       },
     ];
   }

@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Member } from 'src/app/Models/member';
 import { User } from 'src/app/Models/user';
 import { AccountService } from 'src/app/Services/Account.service';
 
@@ -10,7 +11,7 @@ import { AccountService } from 'src/app/Services/Account.service';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
-  user: User = { id: 0, userName: '', password: '' };
+  user: User = {} as User;
   @Output() cancelRegister = new EventEmitter();
 
   /**
