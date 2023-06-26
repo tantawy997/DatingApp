@@ -25,6 +25,8 @@ namespace DAtingApp.helpers
 
 			CreateMap<UpdateUserDto, AppUser>().ReverseMap();
 
+			CreateMap<RegisterDTO, AppUser>()
+				.ReverseMap();
 		}
 
 

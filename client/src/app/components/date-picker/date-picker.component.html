@@ -1,0 +1,22 @@
+<div class="mb-3 text-center">
+  <mat-form-field>
+    <mat-label>Choose a date</mat-label>
+    <input
+      [class.is-invalid]="control.touched && control.invalid"
+      [formControl]="control"
+      class="form-control"
+      matInput
+      [placeholder]="label"
+      [matDatepicker]="picker"
+      [max]="max"
+    />
+
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <div [hidden]="control.errors?.['required']" class="invalid-feedback">
+    {{ label }} is required
+  </div>
+</div>

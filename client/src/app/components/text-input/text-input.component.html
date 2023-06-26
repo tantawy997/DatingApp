@@ -1,0 +1,25 @@
+<div class="form-label-group mb-3">
+  <!-- <label for="">{{ label }}</label> -->
+
+  <input
+    [type]="type"
+    class="form-control"
+    [placeholder]="label"
+    [formControl]="control"
+    [class.is-invalid]="control.errors && control.touched"
+  />
+  <div class="invalid-feedback" *ngIf="control.errors?.['required']">
+    please enter a {{ label }}
+  </div>
+  <div class="invalid-feedback" *ngIf="control.errors?.['maxlength']">
+    {{ label }} must be at most
+    {{ control.errors?.['maxlength'].requiredLength }} characters
+  </div>
+  <div class="invalid-feedback" *ngIf="control.errors?.['minlength']">
+    {{ label }} must be at least
+    {{ control.errors?.['minlength'].requiredLength }} characters
+  </div>
+  <div class="invalid-feedback" *ngIf="control.errors?.['notMatching']">
+    passwords do not match
+  </div>
+</div>

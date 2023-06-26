@@ -7,7 +7,6 @@ import { User } from 'src/app/Models/user';
 import { AccountService } from 'src/app/Services/Account.service';
 import { MemberService } from 'src/app/Services/member.service';
 import { Photo } from 'src/app/Models/photo';
-import { take } from 'rxjs';
 @Component({
   selector: 'app-photo-editor',
   templateUrl: './photo-editor.component.html',
@@ -57,6 +56,11 @@ export class PhotoEditorComponent implements OnInit {
       if (response) {
         const photo = JSON.parse(response);
         this.member?.photos.push(photo);
+        if (photo.isMain && this.user && this.member) {
+          this.member.photoUrl = photo.url;
+          this.user.photoUrl = photo.url;
+          this.AccountService.setCurrentUser(this.user);
+        }
       }
     };
   }

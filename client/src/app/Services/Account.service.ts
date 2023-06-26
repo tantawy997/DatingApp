@@ -12,7 +12,7 @@ export class AccountService {
   private BaseApi: string;
   user: User = {} as User;
   loggedIn: boolean = false;
-  token?: string = '';
+  token: string | undefined;
   userSubject: Subject<User | null> = new Subject<User | null>();
   CurrentUser$ = this.userSubject.asObservable();
 
@@ -52,7 +52,6 @@ export class AccountService {
           this.user = response;
           localStorage.setItem('token', JSON.stringify(response.token));
           localStorage.setItem('user', JSON.stringify(response));
-
           this.userSubject.next(user);
           this.loggedIn = true;
         }
@@ -70,9 +69,6 @@ export class AccountService {
   }
 
   setCurrentUser(user: User) {
-    //console.log(user);
-    localStorage.setItem('token', JSON.stringify(user.token));
-    localStorage.setItem('user', JSON.stringify(user));
     this.userSubject.next(user);
   }
 }
