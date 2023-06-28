@@ -44,6 +44,8 @@ import { DateAgoPipe } from '../pipes/date-ago.pipe';
     MatProgressSpinnerModule,
     FileUploadModule,
     ButtonsModule,
+    MemberCardComponent,
+    PaginationModule,
   ],
 })
 export class MemberModule {}

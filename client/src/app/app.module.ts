@@ -15,6 +15,8 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { MemberModule } from './member/member.module';
 
 @NgModule({
   declarations: [AppComponent, MessagesComponent, ListsComponent],
@@ -32,6 +34,8 @@ import { DateAgoPipe } from './pipes/date-ago.pipe';
     NgxSpinnerModule.forRoot({
       type: 'line-scale-party',
     }),
+    ButtonsModule.forRoot(),
+    MemberModule,
   ],
   exports: [],
   providers: [

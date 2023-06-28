@@ -6,12 +6,12 @@ namespace DAtingApp.extensions
 	{
 		public static string GetUserName(this ClaimsPrincipal User)
 		{
-			return User.FindFirst(ClaimTypes.Name)?.Value;
+			return User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 		}
 
 		public static string GetUserId(this ClaimsPrincipal user)
 		{
-			return user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+			return user.FindFirst(ClaimTypes.Name)?.Value;
 		}
 	}
 

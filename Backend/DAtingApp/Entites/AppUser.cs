@@ -1,4 +1,5 @@
-﻿using DAtingApp.extensions;
+﻿using DAtingApp.Entites;
+using DAtingApp.extensions;
 using System.ComponentModel.DataAnnotations;
 
 namespace DatingApp.Entites
@@ -35,10 +36,10 @@ namespace DatingApp.Entites
 
 		public ICollection<Photo> photos { get; set; } = new HashSet<Photo>();
 
+		
+		public List<UserLike> LikedByUsers { get; set; }
 
-		//public int GetAge()
-		//{
-		//	return DateOfBirth.CalculateAge();
-		//}
+		public List<UserLike> LikedUsers { get; set; }
+
 	}
 }

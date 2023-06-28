@@ -16,7 +16,7 @@ namespace DAtingApp.interfaces.repositoryInterfaces
 
 		Task<bool> SaveAllAsync();
 
-		Task<PageList<MemberDTO>> GetMembersAsync(PaginationParams userParams);
+		Task<PageList<MemberDTO>> GetMembersAsync(UserParams userParams);
 
 		Task<MemberDTO> GetMemberAsync(string UserName);
 	}

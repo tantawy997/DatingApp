@@ -98,6 +98,15 @@ export class MemberService {
     return this.http.delete(this.baseUrl + 'Users/delete-photo/' + photoId);
   }
 
+  addLike(username: string) {
+    return this.http.post(this.baseUrl + 'Like/' + username, {});
+  }
+
+  getLike(Predicate: string, pageNumber: number, pageSize: number) {
+    var params = this.GetPaginationHeader(pageNumber, pageSize);
+    params = params.append('Predicate', Predicate);
+    return this.getPaginationResults<Member[]>(this.baseUrl + 'Like', params);
+  }
   getHttpToken() {
     const tokenJson = localStorage.getItem('user');
     if (!tokenJson) return;

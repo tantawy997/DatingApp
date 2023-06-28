@@ -22,6 +22,7 @@ namespace DAtingApp.Services
             {
 				  //new Claim(JwtRegisteredClaimNames.NameId, user.UserId.ToString()),
 				  new Claim(JwtRegisteredClaimNames.NameId, user.UserName),
+                  new Claim(JwtRegisteredClaimNames.UniqueName, user.UserId.ToString())
 			};
 
             var creds = new SigningCredentials(_SecurityKey, SecurityAlgorithms.HmacSha512Signature);

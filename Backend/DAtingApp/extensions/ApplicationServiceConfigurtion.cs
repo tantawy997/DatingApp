@@ -25,6 +25,8 @@ namespace DAtingApp.extensions
 			services.Configure<cloudinarySettings>(configuration.GetSection("cloudinarySettings"));
 			services.AddScoped<IPhotoService, PhotoService>();
 			services.AddScoped<OnActionExcutionAsync>();
+			services.AddScoped<IUserLikeRepo, UserLikeRepo>();
+
 			return services;
 		}
 	}

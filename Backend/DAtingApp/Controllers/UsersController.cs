@@ -31,7 +31,7 @@ namespace DatingApp.Controller
 
 		[HttpGet("GetUsers")]
 
-		public async Task<ActionResult<PageList<MemberDTO>>> GetAllUsers([FromQuery] PaginationParams userParams)
+		public async Task<ActionResult<PageList<MemberDTO>>> GetAllUsers([FromQuery] UserParams userParams)
 		{
 
 			var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;

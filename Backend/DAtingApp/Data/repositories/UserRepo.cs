@@ -27,7 +27,7 @@ namespace DAtingApp.Data.repositories
 				.SingleOrDefaultAsync();
 		}
 
-		public async Task<PageList<MemberDTO>> GetMembersAsync(PaginationParams userParams)
+		public async Task<PageList<MemberDTO>> GetMembersAsync(UserParams userParams)
 		{
 			var query = _Context.Users.AsQueryable();
 
