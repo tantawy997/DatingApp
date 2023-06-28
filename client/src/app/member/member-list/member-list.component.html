@@ -1,5 +1,79 @@
+<div class="text-center mt-3">
+  your matches - {{ pagination?.totalItems }} found
+</div>
+
+<div class="container mt-3" *ngIf="userParam">
+  <form class="mb-3 d-flex" #ngForm="ngForm" (ngSubmit)="LoadMembers()">
+    <div class="d-flex mx-2">
+      <label class="col-form-label">age from: </label>
+      <input
+        [(ngModel)]="userParam.minAge"
+        type="number"
+        class="form-control ms-1"
+        style="width: 70px"
+        name="minAge"
+        placeholder="minimum Age"
+      />
+    </div>
+    <div class="d-flex mx-2">
+      <label class="col-form-label">age to: </label>
+      <input
+        [(ngModel)]="userParam.maxAge"
+        type="number"
+        class="form-control ms-1"
+        style="width: 70px"
+        name="maxAge"
+        placeholder="minimum Age"
+      />
+    </div>
+    <button class="btn btn-primary ms-1" type="submit">Apply Filter</button>
+    <button class="btn btn-info ms-1" (click)="ResetFilters()" type="submit">
+      Reset Filter
+    </button>
+    <div class="col">
+      <div class="btn-group float-end">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="LoadMembers()"
+          [(ngModel)]="userParam.orderBy"
+          name="orderBy"
+          btnRadio="lastActive"
+        >
+          last active
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="LoadMembers()"
+          [(ngModel)]="userParam.orderBy"
+          name="orderBy"
+          btnRadio="created"
+        >
+          newest members
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
 <div class="row">
-  <div class="col-2" *ngFor="let item of members$ | async">
+  <div class="col-2" *ngFor="let item of members">
     <app-member-card [member]="item"></app-member-card>
   </div>
+</div>
+
+<div class="d-flex justify-content-center" *ngIf="pagination">
+  <pagination
+    [boundaryLinks]="true"
+    [totalItems]="pagination.totalItems"
+    [(ngModel)]="pagination.currentPage"
+    [itemsPerPage]="pagination.pageSize"
+    [maxSize]="10"
+    (pageChanged)="pageChanged($event)"
+    previousText="&lsaquo;"
+    nextText="&rsaquo;"
+    firstText="&laquo;"
+    lastText="&raquo;"
+  >
+  </pagination>
 </div>

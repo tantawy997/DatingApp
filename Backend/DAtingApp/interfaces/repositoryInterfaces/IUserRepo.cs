@@ -1,5 +1,6 @@
 ﻿using DatingApp.Entites;
 using DAtingApp.DTOs;
+using DAtingApp.helpers;
 
 namespace DAtingApp.interfaces.repositoryInterfaces
 {
@@ -15,7 +16,7 @@ namespace DAtingApp.interfaces.repositoryInterfaces
 
 		Task<bool> SaveAllAsync();
 
-		Task<IEnumerable<MemberDTO>> GetMembersAsync();
+		Task<PageList<MemberDTO>> GetMembersAsync(PaginationParams userParams);
 
 		Task<MemberDTO> GetMemberAsync(string UserName);
 	}

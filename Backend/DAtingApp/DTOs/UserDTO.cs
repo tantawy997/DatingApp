@@ -10,5 +10,7 @@
 
 		public string KnownAs { get; set;}
 
+		public string gender { get; set;} 
+
 	}
 }

@@ -13,6 +13,9 @@ import { EditComponent } from './edit/edit.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { PhotoEditorComponent } from './photo-editor/photo-editor.component';
 import { FileUploadModule } from 'ng2-file-upload';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { DateAgoPipe } from '../pipes/date-ago.pipe';
 
 @NgModule({
   declarations: [
@@ -21,6 +24,7 @@ import { FileUploadModule } from 'ng2-file-upload';
     MemberCardComponent,
     EditComponent,
     PhotoEditorComponent,
+    DateAgoPipe,
   ],
   imports: [
     CommonModule,
@@ -32,7 +36,14 @@ import { FileUploadModule } from 'ng2-file-upload';
     NgxGalleryModule,
     MatProgressSpinnerModule,
     FileUploadModule,
+    PaginationModule,
+    ButtonsModule.forRoot(),
   ],
-  exports: [RouterModule, MatProgressSpinnerModule, FileUploadModule],
+  exports: [
+    RouterModule,
+    MatProgressSpinnerModule,
+    FileUploadModule,
+    ButtonsModule,
+  ],
 })
 export class MemberModule {}

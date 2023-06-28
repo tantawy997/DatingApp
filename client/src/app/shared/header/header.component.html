@@ -44,7 +44,7 @@
         *ngIf="AccountService.loggedIn"
         class="text-light dropdown-toggle"
       >
-        welcome {{ user.userName | titlecase }}
+        welcome {{ user.knownAs | titlecase }}
       </button>
       <mat-menu #menu="matMenu" class="dropdown-menu">
         <button mat-menu-item (click)="logout()" class="dropdown-item">

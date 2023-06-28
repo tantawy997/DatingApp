@@ -2,7 +2,15 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
 import { User } from '../Models/user';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, map } from 'rxjs';
+import {
+  BehaviorSubject,
+  EMPTY,
+  Observable,
+  ReplaySubject,
+  Subject,
+  map,
+  of,
+} from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
@@ -13,7 +21,7 @@ export class AccountService {
   user: User = {} as User;
   loggedIn: boolean = false;
   token: string | undefined;
-  userSubject: Subject<User | null> = new Subject<User | null>();
+  private userSubject = new ReplaySubject<User>(1);
   CurrentUser$ = this.userSubject.asObservable();
 
   constructor(private http: HttpClient, private toaster: ToastrService) {
@@ -63,7 +71,7 @@ export class AccountService {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    this.userSubject.next(null);
+    this.CurrentUser$ = EMPTY;
     this.loggedIn = false;
     this.toaster.info('logged out successfully');
   }

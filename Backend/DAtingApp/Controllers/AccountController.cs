@@ -56,6 +56,7 @@ namespace DAtingApp.Controllers
 				Token = TokenService.CreateToken(user) , 
 				UserName = user.UserName,
 				KnownAs = user.KnownAs,
+				gender = user.Gender
 			});
 			
 		}
@@ -88,6 +89,7 @@ namespace DAtingApp.Controllers
 				UserName = user.UserName,
 				PhotoUrl = user.photos.FirstOrDefault(x => x.IsMain)?.Url,
 				KnownAs = user.KnownAs,
+				gender = user.Gender
 			});
 		}
 	}

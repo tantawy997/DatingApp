@@ -4,6 +4,7 @@ using DatingApp.Entites;
 using DAtingApp.Controllers;
 using DAtingApp.DTOs;
 using DAtingApp.extensions;
+using DAtingApp.helpers;
 using DAtingApp.interfaces;
 using DAtingApp.interfaces.repositoryInterfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -30,10 +31,24 @@ namespace DatingApp.Controller
 
 		[HttpGet("GetUsers")]
 
-		public async Task<ActionResult<IEnumerable<MemberDTO>>> GetAllUsers()
+		public async Task<ActionResult<PageList<MemberDTO>>> GetAllUsers([FromQuery] PaginationParams userParams)
 		{
-			var Users = await _UserRepo.GetMembersAsync();
-			//var usersDTO = _Mapper.Map<IEnumerable<MemberDTO>>(Users);
+
+			var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+			var user = await _UserRepo.GetUserByUserNameAsync(username);
+
+			 userParams.CurrentUsername = user.UserName;
+			if (string.IsNullOrEmpty(userParams.Gender))
+			{
+				userParams.Gender = user.Gender == "male" ? "female" : "male";
+				
+			}
+			var Users = await _UserRepo.GetMembersAsync(userParams);
+
+			Response.AddPaginationHeader(new PaginationHeader(Users.CurrentPage, 
+				Users.PageSize, Users.TotalCount, Users.TotalPages));
+
 			return Ok(Users);
 		}
 		
