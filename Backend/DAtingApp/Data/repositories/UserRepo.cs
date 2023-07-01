@@ -65,7 +65,7 @@ namespace DAtingApp.Data.repositories
 		{
 			return await _Context.Users
 				.Include(user => user.photos)
-				.FirstOrDefaultAsync(u => u.UserName == UserName);
+				.SingleOrDefaultAsync(u => u.UserName == UserName);
 
 		}
 

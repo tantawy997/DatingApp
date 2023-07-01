@@ -11,8 +11,8 @@ using System.Text;
 
 namespace DAtingApp.Controllers
 {
-	[Route("api/[controller]")]
-	[ApiController]
+	//[Route("api/[controller]")]
+	//[ApiController]
 	public class AccountController : ApiControllerBase
 	{
 		private readonly DataContext _Context;

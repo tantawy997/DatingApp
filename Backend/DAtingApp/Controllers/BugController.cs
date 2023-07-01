@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DAtingApp.Controllers
 {
-	[Route("api/[controller]")]
-	[ApiController]
+	//[Route("api/[controller]")]
+	//[ApiController]
 	public class BugController : ApiControllerBase
 	{
 		private readonly DataContext _Context;

@@ -11,9 +11,9 @@ using System.Security.Claims;
 
 namespace DAtingApp.Controllers
 {
-	[Route("api/[controller]")]
-	[ApiController]
-	public class LikeController : ControllerBase
+	//[Route("api/[controller]")]
+	//[ApiController]
+	public class LikeController : ApiControllerBase
 	{
 		private readonly IUserLikeRepo _UserLikeRepo;
 		private readonly IUserRepo _UserRepo;

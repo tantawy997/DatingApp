@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -33,8 +34,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatFormFieldModule,
     MatNativeDateModule,
     MatDatepickerModule,
+    FontAwesomeModule,
   ],
 
-  exports: [HomeComponent, HeaderComponent, RouterModule],
+  exports: [HomeComponent, HeaderComponent, RouterModule, FontAwesomeModule],
 })
 export class SharedModule {}

@@ -26,6 +26,7 @@ namespace DAtingApp.extensions
 			services.AddScoped<IPhotoService, PhotoService>();
 			services.AddScoped<OnActionExcutionAsync>();
 			services.AddScoped<IUserLikeRepo, UserLikeRepo>();
+			services.AddScoped<IMessagesRepo, MessageRepo>();
 
 			return services;
 		}

@@ -41,8 +41,8 @@ namespace DatingApp.Controller
 			 userParams.CurrentUsername = user.UserName;
 			if (string.IsNullOrEmpty(userParams.Gender))
 			{
+				//userParams.Gender = user.Gender == "male" ? "female" : "male";
 				userParams.Gender = user.Gender == "male" ? "female" : "male";
-				
 			}
 			var Users = await _UserRepo.GetMembersAsync(userParams);
 

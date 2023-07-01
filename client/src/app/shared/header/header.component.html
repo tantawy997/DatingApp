@@ -12,6 +12,7 @@
           *ngIf="AccountService.loggedIn"
           routerLink="/members/MembersList"
           routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
           >Matches</a
         >
       </li>

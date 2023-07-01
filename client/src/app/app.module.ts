@@ -14,7 +14,6 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
-import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { MemberModule } from './member/member.module';
 

@@ -2,6 +2,7 @@
 using DatingApp.Data;
 using DatingApp.Entites;
 using DAtingApp.DTOs;
+using DAtingApp.Entites;
 using DAtingApp.extensions;
 
 namespace DAtingApp.helpers
@@ -27,6 +28,17 @@ namespace DAtingApp.helpers
 
 			CreateMap<RegisterDTO, AppUser>()
 				.ReverseMap();
+
+			CreateMap<Message, MessageDTO>()
+				.ForMember(dest => dest.RecipientPhotoUrl,src => src
+				.MapFrom(photo => photo.Recipient.photos.FirstOrDefault(p => p.IsMain).Url))
+				.ForMember(dest => dest.SenderPhotoUrl, src => src
+				.MapFrom(photo => photo.Sender.photos.FirstOrDefault(p => p.IsMain).Url))
+				.ReverseMap();
+
+				
+				
+
 		}
 
 

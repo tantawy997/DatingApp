@@ -16,6 +16,8 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { DateAgoPipe } from '../pipes/date-ago.pipe';
+import { MemberMessagesComponent } from './member-messages/member-messages.component';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { DateAgoPipe } from '../pipes/date-ago.pipe';
     EditComponent,
     PhotoEditorComponent,
     DateAgoPipe,
+    MemberMessagesComponent,
   ],
   imports: [
     CommonModule,
@@ -38,6 +41,7 @@ import { DateAgoPipe } from '../pipes/date-ago.pipe';
     FileUploadModule,
     PaginationModule,
     ButtonsModule.forRoot(),
+    TabsModule.forRoot(),
   ],
   exports: [
     RouterModule,
@@ -46,6 +50,7 @@ import { DateAgoPipe } from '../pipes/date-ago.pipe';
     ButtonsModule,
     MemberCardComponent,
     PaginationModule,
+    DateAgoPipe,
   ],
 })
 export class MemberModule {}

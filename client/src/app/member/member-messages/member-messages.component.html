@@ -1,0 +1,67 @@
+<div class="card">
+  <div class="card-body">
+    <div *ngIf="messages.length == 0" class="text-center">no messages here</div>
+    <ul class="chat" *ngIf="messages.length > 0">
+      <li *ngFor="let message of messages">
+        <div>
+          <span class="chat-img float-end">
+            <img
+              [src]="message.senderPhotoUrl || 'assets/user.png'"
+              alt="Sender photo"
+              class="rounded-circle"
+            />
+          </span>
+          <div class="chat-body">
+            <div class="header">
+              <small class="text-muted">
+                <fa-icon [icon]="faClock">{{
+                  message.messageReadDate + "Z" | dateAgo
+                }}</fa-icon>
+                <span
+                  class="text-warning"
+                  *ngIf="
+                    !message.messageReadDate &&
+                    message.senderUserName !== userName
+                  "
+                  >(unread)</span
+                >
+                <span
+                  class="text-success"
+                  *ngIf="
+                    message.messageReadDate &&
+                    message.senderUserName !== userName
+                  "
+                  >(read {{ message.messageReadDate + "Z" | dateAgo }})</span
+                >
+              </small>
+            </div>
+          </div>
+          <p>{{ message.content }}</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="card-footer">
+    <form #formChat="ngForm" (ngSubmit)="sendMessage()" autocomplete="off">
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control me-2 input-sm"
+          placeholder="send a private message"
+          required
+          name="messageContent"
+          [(ngModel)]="messageContent"
+        />
+        <div class="input-group-append">
+          <button
+            type="submit"
+            class="btn btn-success"
+            [disabled]="!formChat.valid"
+          >
+            send
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

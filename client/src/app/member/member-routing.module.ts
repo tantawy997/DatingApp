@@ -5,6 +5,7 @@ import { MemberDetailsComponent } from './member-details/member-details.componen
 import { authGuard } from '../Guards/auth.guard';
 import { EditComponent } from './edit/edit.component';
 import { preventBeforeSaveGuard } from '../Guards/prevent-before-save.guard';
+import { memberDetailResolver } from '../resolvers/member-detail.resolver';
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
     path: 'MembersList/:userName',
     component: MemberDetailsComponent,
     canActivate: [authGuard],
+    resolve: { member: memberDetailResolver },
   },
   {
     path: 'member/edit',

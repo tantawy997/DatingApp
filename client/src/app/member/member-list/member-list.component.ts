@@ -15,6 +15,7 @@ import { MemberService } from 'src/app/Services/member.service';
 export class MemberListComponent implements OnInit {
   members: Member[] = [];
   //members$: Observable<Member[]> | undefined;
+
   pagination: Pagination | undefined;
   user: User | undefined;
   userParam: UserParams | undefined;
@@ -29,6 +30,7 @@ export class MemberListComponent implements OnInit {
   }
 
   LoadMembers() {
+    console.log(this.userParam);
     if (this.userParam) {
       this.MemberService.setUserParams(this.userParam);
       this.MemberService.GetMembers(this.userParam).subscribe(
