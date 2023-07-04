@@ -1,5 +1,7 @@
 ﻿using DatingApp.Entites;
 using DAtingApp.Entites;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.Security.Cryptography;
@@ -8,14 +10,14 @@ using System.Text.Json;
 
 namespace DatingApp.Data
 {
-	public class DataContext : DbContext
+	public class DataContext : IdentityDbContext<AppUser, AppRole,Guid,
+		IdentityUserClaim<Guid>, AppUserRole,IdentityUserLogin<Guid>,IdentityRoleClaim<Guid>
+		,IdentityUserToken<Guid>>
 	{
 		public DataContext(DbContextOptions<DataContext> options) : base(options)
 		{
 		}
 
-
-		public virtual DbSet<AppUser> Users { get; set; }
 		public virtual DbSet<Photo> Photos { get; set; }
 		public virtual DbSet<UserLike> Likes { get; set; }
 		public virtual DbSet<Message> Messages { get; set; }
@@ -23,6 +25,18 @@ namespace DatingApp.Data
 		{
 
 			base.OnModelCreating(modelBuilder);
+
+			modelBuilder.Entity<AppUser>().
+				HasMany(ur => ur.UserRoles)
+				.WithOne(u => u.User)
+				.HasForeignKey(f => f.UserId)
+				.IsRequired();
+
+			modelBuilder.Entity<AppRole>().
+			HasMany(ur => ur.UserRoles)
+			.WithOne(u => u.Role)
+			.HasForeignKey(f => f.RoleId)
+			.IsRequired();
 
 			modelBuilder.Entity<UserLike>()
 				.HasKey(k => new {k.SourceUserId, k.TargetUserId});

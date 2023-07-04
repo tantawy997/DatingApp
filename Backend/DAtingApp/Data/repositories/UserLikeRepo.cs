@@ -24,7 +24,7 @@ namespace DAtingApp.Data.repositories
 
 		public async Task<PageList<LikeDTO>> GetUserLikes(LikeParams likeParams)
 		{
-			var users = _Context.Users.Where(like => like.UserId == likeParams.UserId).AsQueryable();
+			var users = _Context.Users.Where(like => like.Id == likeParams.UserId).AsQueryable();
 			var likes = _Context.Likes.AsQueryable();
 			
 			if(likeParams.Predicate == "Liked")
@@ -45,7 +45,7 @@ namespace DAtingApp.Data.repositories
 				photoUrl = user.photos.FirstOrDefault(p => p.IsMain).Url,
 				UserName = user.UserName,
 				Age = user.DateOfBirth.CalculateAge(),
-				UserId = user.UserId,
+				UserId = user.Id,
 				City = user.City
 			});
 
@@ -56,7 +56,7 @@ namespace DAtingApp.Data.repositories
 		public async Task<AppUser> GetUsersWithLikes(Guid UserId)
 		{
 			return await _Context.Users.Include(u => u.LikedUsers)
-				.FirstOrDefaultAsync(u => u.UserId == UserId);
+				.FirstOrDefaultAsync(u => u.Id == UserId);
 		}
 	}
 }

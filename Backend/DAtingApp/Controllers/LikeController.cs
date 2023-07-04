@@ -36,14 +36,14 @@ namespace DAtingApp.Controllers
 			if (LikedUser == null) return NotFound();
 			if (SourceUser.UserName == UserName) return BadRequest("you can not like your self");
 
-			var userLike = await _UserLikeRepo.GetUserLikeAsync(SourceUserId, LikedUser.UserId);
+			var userLike = await _UserLikeRepo.GetUserLikeAsync(SourceUserId, LikedUser.Id);
 
 			if (userLike != null) return BadRequest("you already liked this user");
 
 			userLike = new UserLike
 			{
 				SourceUserId = SourceUserId,
-				TargetUserId = LikedUser.UserId
+				TargetUserId = LikedUser.Id
 			};
 
 			

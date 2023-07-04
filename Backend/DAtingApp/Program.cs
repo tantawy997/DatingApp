@@ -1,10 +1,13 @@
 using DatingApp.Data;
+using DatingApp.Entites;
 using DAtingApp.Data;
+using DAtingApp.Entites;
 using DAtingApp.extensions;
 using DAtingApp.helpers;
 using DAtingApp.interfaces;
 using DAtingApp.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -67,18 +70,21 @@ namespace DAtingApp
 			app.MapControllers();
 
 			using var scope = app.Services.CreateScope();
-			var serivce = scope.ServiceProvider;
+			var service = scope.ServiceProvider;
 			try
 			{
-				var context = serivce.GetRequiredService<DataContext>();
+				var context = service.GetRequiredService<DataContext>();
+				var userManager = service.GetRequiredService<UserManager<AppUser>>();
+				var roleManager = service.GetRequiredService<RoleManager<AppRole>>();
+
 				await context.Database.MigrateAsync();
 
-				await SeedDataContext.Seed(context);
+				await SeedDataContext.Seed(userManager,context,roleManager);
 
 			}
 			catch (Exception ex)
 			{
-				var logger = serivce.GetRequiredService<ILogger<Program>>();
+				var logger = service.GetRequiredService<ILogger<Program>>();
 
 				logger.LogError(ex, "an error occured during seeding the data");
 			}

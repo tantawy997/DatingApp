@@ -4,7 +4,6 @@ import { environment } from 'src/environments/environment';
 import { Member } from '../Models/member';
 import { map, observable, of, take } from 'rxjs';
 import { Photo } from '../Models/photo';
-import { PaginationResult } from '../Models/pagination';
 import { UserParams } from '../Models/user-params';
 import { AccountService } from './Account.service';
 import { User } from '../Models/user';

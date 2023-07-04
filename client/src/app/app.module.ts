@@ -16,9 +16,22 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { MemberModule } from './member/member.module';
+import { AdminPanelComponent } from './Admin/admin-panel/admin-panel.component';
+import { HasRoleDirective } from './directives/has-role.directive';
+import { PhotoManagementComponent } from './Admin/photo-management/photo-management.component';
+import { UserManagementComponent } from './Admin/user-management/user-management.component';
+import { RolesModalComponent } from './Modals/roles-modal/roles-modal.component';
 
 @NgModule({
-  declarations: [AppComponent, MessagesComponent, ListsComponent],
+  declarations: [
+    AppComponent,
+    MessagesComponent,
+    ListsComponent,
+    AdminPanelComponent,
+    PhotoManagementComponent,
+    UserManagementComponent,
+    RolesModalComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

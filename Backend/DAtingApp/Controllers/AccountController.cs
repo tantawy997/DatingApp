@@ -4,6 +4,8 @@ using DatingApp.Entites;
 using DAtingApp.DTOs;
 using DAtingApp.interfaces;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
@@ -15,14 +17,16 @@ namespace DAtingApp.Controllers
 	//[ApiController]
 	public class AccountController : ApiControllerBase
 	{
-		private readonly DataContext _Context;
+		//private readonly DataContext _Context;
+		private readonly UserManager<AppUser> _UserManager;
 		private readonly IMapper _Mapper;
 
 		public ITokenService TokenService { get; }
 
-		public AccountController(DataContext Context,ITokenService tokenService,IMapper mapper)
+		public AccountController(UserManager<AppUser> userManager,ITokenService tokenService,IMapper mapper)
 		{
-			_Context = Context;
+			//_Context = Context;
+			_UserManager = userManager;
 			TokenService = tokenService;
 			_Mapper = mapper;
 		}
@@ -31,7 +35,7 @@ namespace DAtingApp.Controllers
 		
 		public async Task<ActionResult<UserDTO>> Register(RegisterDTO userDto)
 		{
-			var checkexist = await  _Context.Users.AnyAsync(x => x.UserName == userDto.UserName.ToLower());
+			var checkexist = await  _UserManager.Users.AnyAsync(x => x.UserName == userDto.UserName.ToLower());
 
 			if(checkexist)
 			{
@@ -39,21 +43,25 @@ namespace DAtingApp.Controllers
 			}
 			var user = _Mapper.Map<AppUser>(userDto);
 
-			using var macHash = new HMACSHA512();
 
 			user.UserName = userDto.UserName.ToLower();
-			user.PasswordHah = macHash.ComputeHash(Encoding.UTF8.GetBytes(userDto.Password));
-			user.PasswordSalt = macHash.Key;
-			
-			var checkUser = await _Context.Users.FirstOrDefaultAsync(a => a.UserId == user.UserId);
 
-			await _Context.AddAsync(user);
-			await _Context.SaveChangesAsync();
+			//var checkUser = await _UserManager.Users.FirstOrDefaultAsync(a => a.Id == user.Id);
+
+			var result = await _UserManager.CreateAsync(user, userDto.Password);
+			//await _Context.SaveChangesAsync();
+			if (!result.Succeeded) return BadRequest(result.Errors);
+
+			var userResult = await _UserManager.AddToRoleAsync(user,"Member");
+
+			if (!userResult.Succeeded) return BadRequest(userResult.Errors);
+
+
 			return Ok
 			(
 			new UserDTO 
 			{
-				Token = TokenService.CreateToken(user) , 
+				Token = await TokenService.CreateToken(user) , 
 				UserName = user.UserName,
 				KnownAs = user.KnownAs,
 				gender = user.Gender
@@ -65,7 +73,7 @@ namespace DAtingApp.Controllers
 
 		public async Task<ActionResult<UserDTO>> login(LoginDTO login)
 		{
-			AppUser user = await _Context.Users
+			AppUser user = await _UserManager.Users
 				.Include(p => p.photos)
 				.FirstOrDefaultAsync(x => x.UserName ==  login.UserName);
 			if(user == null)
@@ -73,19 +81,15 @@ namespace DAtingApp.Controllers
 				return Unauthorized("invalid username");
 			}
 
-			var HashedPass = new HMACSHA512(user.PasswordSalt);
-			var ComputedHAshed = HashedPass.ComputeHash(Encoding.UTF8.GetBytes(login.Password));
+			var result = await _UserManager.CheckPasswordAsync(user,login.Password);
 
-			for (int i = 0; i < ComputedHAshed.Length; i++)
-			{
-				if (ComputedHAshed[i] != user.PasswordHah[i]) return Unauthorized("invalid password");
-			}
+			if (!result) return Unauthorized("invalid password");
 
 			return Ok
 			(
 			new UserDTO
 			{
-				Token = TokenService.CreateToken(user),
+				Token = await TokenService.CreateToken(user),
 				UserName = user.UserName,
 				PhotoUrl = user.photos.FirstOrDefault(x => x.IsMain)?.Url,
 				KnownAs = user.KnownAs,

@@ -44,7 +44,7 @@ export class MemberListComponent implements OnInit {
     }
   }
   identify(index: number, item: Member) {
-    return item.userId;
+    return item.id;
   }
 
   pageChanged(event: any) {

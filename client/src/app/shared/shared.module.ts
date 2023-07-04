@@ -14,6 +14,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HasRoleDirective } from '../directives/has-role.directive';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     HeaderComponent,
     TextInputComponent,
     DatePickerComponent,
+    HasRoleDirective,
   ],
   imports: [
     CommonModule,
@@ -35,8 +38,16 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatNativeDateModule,
     MatDatepickerModule,
     FontAwesomeModule,
+    ModalModule.forRoot(),
   ],
 
-  exports: [HomeComponent, HeaderComponent, RouterModule, FontAwesomeModule],
+  exports: [
+    HomeComponent,
+    HeaderComponent,
+    RouterModule,
+    FontAwesomeModule,
+    ModalModule,
+    HasRoleDirective,
+  ],
 })
 export class SharedModule {}

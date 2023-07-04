@@ -1,19 +1,12 @@
 ﻿using DAtingApp.Entites;
 using DAtingApp.extensions;
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
 namespace DatingApp.Entites
 {
-	public class AppUser
+	public class AppUser : IdentityUser<Guid>
 	{
-		[Key]
-		public Guid UserId { get; set; }
-
-		public string UserName { get; set; }
-
-		public byte[] PasswordHah { get; set; }
-
-		public byte[] PasswordSalt { get; set; }
 
 		public DateTime DateOfBirth { get; set; }
 		public string KnownAs { get; set; }
@@ -46,6 +39,7 @@ namespace DatingApp.Entites
 		public List<Message> MessagesReceived { get; set; }
 
 
+		public ICollection<AppUserRole> UserRoles { get; set; }
 
 	}
 }

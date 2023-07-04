@@ -51,6 +51,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     MemberCardComponent,
     PaginationModule,
     DateAgoPipe,
+    TabsModule,
   ],
 })
 export class MemberModule {}
