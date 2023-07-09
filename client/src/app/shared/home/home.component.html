@@ -5,7 +5,7 @@
     <p class="lead mt-4" style="font-weight: 400">
       Come on in to view your matches... all you need to do is sign up!
     </p>
-    <div class="text-center">
+    <div class="text-center" *ngIf="!accountService.loggedIn">
       <button (click)="registerToggle()" class="btn btn-primary btn-lg me-2">
         Register
       </button>

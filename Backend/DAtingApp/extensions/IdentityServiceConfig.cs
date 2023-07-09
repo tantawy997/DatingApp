@@ -29,13 +29,26 @@ namespace DAtingApp.extensions
 			{
 			option.TokenValidationParameters = new TokenValidationParameters
 			{
-			ValidateIssuerSigningKey = true,
-			ValidateAudience = false,
-			IssuerSigningKey = new SymmetricSecurityKey(
-				Encoding.UTF8.GetBytes(configuration["TokenKey"])),
-			ValidateIssuer = false
+				ValidateIssuerSigningKey = true,
+				ValidateAudience = false,
+				IssuerSigningKey = new SymmetricSecurityKey(
+					Encoding.UTF8.GetBytes(configuration["TokenKey"])),
+				ValidateIssuer = false
 			};
-			
+				option.Events = new JwtBearerEvents
+				{
+					OnMessageReceived = context =>
+					{
+						var accessToken = context.Request.Query["access_token"];
+						var path = context.HttpContext.Request.Path;
+						if(!string.IsNullOrEmpty(accessToken)&& path.StartsWithSegments("/hubs"))
+						{
+							context.Token = accessToken;
+						};
+
+						return Task.CompletedTask;
+					}
+				};
 			});
 
 			services.AddAuthorization(option =>

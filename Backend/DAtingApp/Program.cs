@@ -6,6 +6,7 @@ using DAtingApp.extensions;
 using DAtingApp.helpers;
 using DAtingApp.interfaces;
 using DAtingApp.Middleware;
+using DAtingApp.SginalR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -42,9 +43,11 @@ namespace DAtingApp
 					{
 						policyBuilder
 
-							.AllowAnyOrigin()
+
 							.AllowAnyMethod()
-							.AllowAnyHeader();
+							.AllowAnyHeader()
+							.AllowCredentials()
+							.WithOrigins("https://localhost:4200");
 					});
 			});
 			builder.Services.AddHttpContextAccessor();
@@ -69,6 +72,10 @@ namespace DAtingApp
 			
 			app.MapControllers();
 
+			app.MapHub<PresenseHub>("hubs/presence");
+			app.MapHub<MessageHub>("hubs/message");
+
+
 			using var scope = app.Services.CreateScope();
 			var service = scope.ServiceProvider;
 			try
@@ -78,7 +85,7 @@ namespace DAtingApp
 				var roleManager = service.GetRequiredService<RoleManager<AppRole>>();
 
 				await context.Database.MigrateAsync();
-
+				await context.Database.ExecuteSqlRawAsync("TRUNCATE TABLE [Connections]");
 				await SeedDataContext.Seed(userManager,context,roleManager);
 
 			}

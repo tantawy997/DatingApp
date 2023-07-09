@@ -4,31 +4,36 @@ import {
   ViewChild,
   AfterViewInit,
   ChangeDetectorRef,
+  OnDestroy,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { RouteReuseStrategy } from '@angular/router';
+
 import {
   NgxGalleryAnimation,
   NgxGalleryImage,
   NgxGalleryOptions,
 } from '@kolkov/ngx-gallery';
 import { take } from 'rxjs';
-import { faArrowAltCircleRight } from '@fortawesome/free-regular-svg-icons';
 import { Member } from 'src/app/Models/member';
 import { User } from 'src/app/Models/user';
 import { AccountService } from 'src/app/Services/Account.service';
-import { MemberService } from 'src/app/Services/member.service';
 import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { MessageService } from 'src/app/Services/message.service';
 import { Message } from 'src/app/Models/message';
+import { PresenceService } from 'src/app/Services/presence.service';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-member-details',
   templateUrl: './member-details.component.html',
   styleUrls: ['./member-details.component.css'],
 })
-export class MemberDetailsComponent implements OnInit, AfterViewInit {
+export class MemberDetailsComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   @ViewChild('memberTabs', { static: true }) memberTabs?: TabsetComponent;
-
+  faUser = faUserCircle;
   member: Member = {} as Member;
   UserName!: string;
   user: User = {} as User;
@@ -39,15 +44,20 @@ export class MemberDetailsComponent implements OnInit, AfterViewInit {
   constructor(
     private ActiveRoute: ActivatedRoute,
     private router: Router,
-    private MemberService: MemberService,
+    private route: RouteReuseStrategy,
+
+    private accountService: AccountService,
     private AccountService: AccountService,
     private MessagesService: MessageService,
-    private _cdr: ChangeDetectorRef
+    private _cdr: ChangeDetectorRef,
+    public presenceService: PresenceService
   ) {
     this.AccountService.CurrentUser$.pipe(take(1)).subscribe((response) => {
       if (response) this.user = response;
     });
+    this.route.shouldReuseRoute = () => false;
   }
+
   ngOnInit() {
     this.ActiveRoute.data.subscribe((data) => {
       this.member = data['member'];
@@ -89,7 +99,9 @@ export class MemberDetailsComponent implements OnInit, AfterViewInit {
   onActivated(data: TabDirective) {
     this.activeTab = data;
     if (this.activeTab.heading == 'Messages') {
-      this.loadMessages();
+      this.MessagesService.CreateHubConnection(this.user, this.member.userName);
+    } else {
+      this.MessagesService.stopHubConnection();
     }
   }
   loadMessages() {
@@ -113,5 +125,8 @@ export class MemberDetailsComponent implements OnInit, AfterViewInit {
       const selectedTab = params['tab'];
       this.activeTab.selectTab = selectedTab > 0 ? selectedTab : 0;
     });
+  }
+  ngOnDestroy(): void {
+    this.MessagesService.stopHubConnection();
   }
 }

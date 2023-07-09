@@ -4,6 +4,7 @@ using DAtingApp.helpers;
 using DAtingApp.interfaces;
 using DAtingApp.interfaces.repositoryInterfaces;
 using DAtingApp.Services;
+using DAtingApp.SginalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAtingApp.extensions
@@ -27,6 +28,8 @@ namespace DAtingApp.extensions
 			services.AddScoped<OnActionExcutionAsync>();
 			services.AddScoped<IUserLikeRepo, UserLikeRepo>();
 			services.AddScoped<IMessagesRepo, MessageRepo>();
+			services.AddSignalR();
+			services.AddSingleton<PresenceTracker>();
 
 			return services;
 		}

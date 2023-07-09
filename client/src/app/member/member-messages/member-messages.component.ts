@@ -13,23 +13,21 @@ export class MemberMessagesComponent implements OnInit {
   //messages: Message[] = [];
   faClock = faClock;
   @Input() userName: string = '';
-  @Input() messages: Message[] = [];
+  //@Input() messages: Message[] = [];
   messageContent: string = '';
   @ViewChild('formChat') formChat?: NgForm;
 
-  constructor(private MessagesService: MessageService) {}
+  constructor(public MessagesService: MessageService) {}
 
   ngOnInit() {
     // this.loadMessages();
   }
 
   sendMessage() {
-    this.MessagesService.SendMessage(
-      this.messageContent,
-      this.userName
-    ).subscribe((message) => {
-      this.messages.push(message);
-      this.formChat?.resetForm();
-    });
+    this.MessagesService.SendMessage(this.messageContent, this.userName).then(
+      () => {
+        this.formChat?.resetForm();
+      }
+    );
   }
 }

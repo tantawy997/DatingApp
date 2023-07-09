@@ -18,6 +18,7 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { DateAgoPipe } from '../pipes/date-ago.pipe';
 import { MemberMessagesComponent } from './member-messages/member-messages.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { TimeagoModule } from 'ngx-timeago';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     PaginationModule,
     ButtonsModule.forRoot(),
     TabsModule.forRoot(),
+    TimeagoModule.forRoot(),
   ],
   exports: [
     RouterModule,
@@ -52,6 +54,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     PaginationModule,
     DateAgoPipe,
     TabsModule,
+    TimeagoModule,
   ],
 })
 export class MemberModule {}

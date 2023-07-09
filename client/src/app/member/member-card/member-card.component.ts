@@ -5,6 +5,7 @@ import { faHeart, faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { Router } from '@angular/router';
 import { MemberService } from 'src/app/Services/member.service';
 import { ToastrService } from 'ngx-toastr';
+import { PresenceService } from 'src/app/Services/presence.service';
 
 @Component({
   selector: 'app-member-card',
@@ -19,7 +20,8 @@ export class MemberCardComponent {
   constructor(
     private router: Router,
     private memberService: MemberService,
-    private toaster: ToastrService
+    private toaster: ToastrService,
+    public PresenceService: PresenceService
   ) {}
   toChild(username: string) {
     this.router.navigateByUrl('members/MembersList/' + username);

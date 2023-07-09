@@ -29,8 +29,13 @@
   </div>
   <div class="card-body p-1">
     <h6 class="card-title text-center mb-1">
-      <fa-icon class="me-2" [icon]="faUser"></fa-icon>
-
+      <span
+        [class.is-online]="
+          (PresenceService.onLineUsers$ | async)?.includes(member.userName)
+        "
+      >
+        <fa-icon class="me-2" [icon]="faUser"></fa-icon>
+      </span>
       {{ member.knownAs }} , {{ member.age }}
     </h6>
 

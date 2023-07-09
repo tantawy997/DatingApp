@@ -12,6 +12,7 @@ import {
   of,
 } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { PresenceService } from './presence.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,15 +21,19 @@ export class AccountService {
   private BaseApi: string;
   user: User = {} as User;
   loggedIn: boolean = false;
-  token: string | undefined;
+  //token: string | undefined;
   private userSubject = new ReplaySubject<User>(1);
   CurrentUser$ = this.userSubject.asObservable();
 
-  constructor(private http: HttpClient, private toaster: ToastrService) {
+  constructor(
+    private http: HttpClient,
+    private toaster: ToastrService,
+    private presenceService: PresenceService
+  ) {
     this.BaseApi = environment.BaseApi;
-    this.token = JSON.parse(localStorage.getItem('token')!);
+    //this.token = JSON.parse(localStorage.getItem('token')!);
     this.user = JSON.parse(localStorage.getItem('user')!);
-    if (this?.token || this.user) {
+    if (this.user) {
       this.loggedIn = true;
     } else {
       this.loggedIn = false;
@@ -41,10 +46,12 @@ export class AccountService {
         if (user) {
           this.user = user;
           // console.log(user);
-          localStorage.setItem('token', JSON.stringify(user.token));
-          localStorage.setItem('user', JSON.stringify(user));
+          //localStorage.setItem('token', JSON.stringify(user.token));
+          //localStorage.setItem('user', JSON.stringify(user));
+          this.setCurrentUser(user);
           this.toaster.success('welcome ' + user.userName);
-          this.userSubject.next(user);
+
+          //this.userSubject.next(user);
 
           this.loggedIn = true;
         }
@@ -58,9 +65,11 @@ export class AccountService {
       map((response: User) => {
         if (response) {
           this.user = response;
-          localStorage.setItem('token', JSON.stringify(response.token));
-          localStorage.setItem('user', JSON.stringify(response));
-          this.userSubject.next(user);
+          /// localStorage.setItem('token', JSON.stringify(response.token));
+
+          this.setCurrentUser(response);
+          //this.toaster.success('welcome you are registered' + user.userName);
+
           this.loggedIn = true;
         }
         return response;
@@ -69,11 +78,14 @@ export class AccountService {
   }
 
   logout() {
-    localStorage.removeItem('token');
+    //localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.CurrentUser$ = EMPTY;
     this.loggedIn = false;
+    this.user = {} as User;
+
     this.toaster.info('logged out successfully');
+    this.presenceService.stopHubConnection();
   }
 
   setCurrentUser(user: User) {
@@ -82,6 +94,7 @@ export class AccountService {
     Array.isArray(roles) ? (user.roles = roles) : user.roles.push(roles);
     localStorage.setItem('user', JSON.stringify(user));
     this.userSubject.next(user);
+    this.presenceService.createHubConnection(user);
   }
 
   getDecodedToken(token: string) {

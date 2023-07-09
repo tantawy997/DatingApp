@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks.Dataflow;
 
 namespace DatingApp.Data
 {
@@ -21,6 +22,9 @@ namespace DatingApp.Data
 		public virtual DbSet<Photo> Photos { get; set; }
 		public virtual DbSet<UserLike> Likes { get; set; }
 		public virtual DbSet<Message> Messages { get; set; }
+		public virtual DbSet<Group> Groups { get; set; }
+		public virtual DbSet<Connection> Connections { get; set; }
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 

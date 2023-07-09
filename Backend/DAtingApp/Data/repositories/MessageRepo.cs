@@ -19,6 +19,12 @@ namespace DAtingApp.Data.repositories
 			_Context = context;
 			_Mapper = mapper;
 		}
+
+		public void AddGroup(Group group)
+		{
+			_Context.Groups.Add(group);
+		}
+
 		public void AddMessage(Message message)
 		{
 			_Context.Messages.Add(message);
@@ -29,9 +35,27 @@ namespace DAtingApp.Data.repositories
 			_Context.Messages.Remove(message);
 		}
 
+		public async Task<Connection> GetConnection(string ConnectionId)
+		{
+			return await _Context.Connections.FindAsync(ConnectionId);
+		}
+
+		public async Task<Group> GetGroupForConnection(string ConnectionId)
+		{
+			return await _Context.Groups.Include(c => c.Connections)
+				.Where(x => x.Connections.Any(a => a.ConnectionId == ConnectionId))
+				.FirstOrDefaultAsync();
+		}
+
 		public async Task<Message> GetMessageAsync(Guid messageId)
 		{
 			return	await _Context.Messages.FindAsync(messageId);
+		}
+
+		public async Task<Group> GetMessageGroup(string GroupName)
+		{
+			return await _Context.Groups.Include(connection => connection.Connections)
+				.FirstOrDefaultAsync(group => group.GroupName == GroupName);
 		}
 
 		public async Task<PageList<MessageDTO>> GetMessagesForUser(MessageParams messageParams)
@@ -67,7 +91,7 @@ namespace DAtingApp.Data.repositories
 				||
 				u.Recipient.UserName == RecipientUserName && u.SenderDeleted == false &&
 				u.Sender.UserName == CurrentUserName 
-				).OrderByDescending(m=>m.MessageSentDate).ToListAsync();
+				).OrderBy(m=>m.MessageSentDate).ToListAsync();
 
 			var unreadMessages = messages.Where(u => u.MessageReadDate == null
 			&& u.RecipientUserName == CurrentUserName).ToList();
@@ -84,6 +108,11 @@ namespace DAtingApp.Data.repositories
 
 			return _Mapper.Map<IEnumerable<MessageDTO>>(messages);
 
+		}
+
+		public void RemoveConnection(Connection connection)
+		{
+			_Context.Connections.Remove(connection);
 		}
 
 		public async Task<bool> SaveAllAsync()
