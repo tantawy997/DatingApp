@@ -82,18 +82,15 @@ namespace DAtingApp.Data.repositories
 
 		public async Task<IEnumerable<MessageDTO>> GetMessagesThread(string CurrentUserName, string RecipientUserName)
 		{
-			var messages = await _Context.Messages
-				.Include(u => u.Sender).ThenInclude(u => u.photos)
-				.Include(u =>u.Recipient).ThenInclude(u => u.photos)
-
+			var query = _Context.Messages
 				.Where(u => u.Recipient.UserName == CurrentUserName && u.RecipientDeleted == false
 				&& u.Sender.UserName == RecipientUserName 
 				||
 				u.Recipient.UserName == RecipientUserName && u.SenderDeleted == false &&
 				u.Sender.UserName == CurrentUserName 
-				).OrderBy(m=>m.MessageSentDate).ToListAsync();
+				).OrderBy(m=>m.MessageSentDate).AsQueryable();
 
-			var unreadMessages = messages.Where(u => u.MessageReadDate == null
+			var unreadMessages = query.Where(u => u.MessageReadDate == null
 			&& u.RecipientUserName == CurrentUserName).ToList();
 
 			if (unreadMessages.Any())
@@ -104,9 +101,9 @@ namespace DAtingApp.Data.repositories
 				}
 			}
 
-			await _Context.SaveChangesAsync();
+			//await _Context.SaveChangesAsync();
 
-			return _Mapper.Map<IEnumerable<MessageDTO>>(messages);
+			return await query.ProjectTo<MessageDTO>(_Mapper.ConfigurationProvider).ToListAsync();
 
 		}
 
@@ -115,9 +112,9 @@ namespace DAtingApp.Data.repositories
 			_Context.Connections.Remove(connection);
 		}
 
-		public async Task<bool> SaveAllAsync()
-		{
-			return await _Context.SaveChangesAsync() > 0;
-		}
+		//public async Task<bool> SaveAllAsync()
+		//{
+		//	return await _Context.SaveChangesAsync() > 0;
+		//}
 	}
 }

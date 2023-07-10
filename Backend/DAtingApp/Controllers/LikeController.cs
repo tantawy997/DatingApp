@@ -3,6 +3,7 @@ using DAtingApp.Entites;
 using DAtingApp.extensions;
 using DAtingApp.helpers;
 using DAtingApp.interfaces.repositoryInterfaces;
+using DAtingApp.UnitOfWorkRepo;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
@@ -15,13 +16,11 @@ namespace DAtingApp.Controllers
 	//[ApiController]
 	public class LikeController : ApiControllerBase
 	{
-		private readonly IUserLikeRepo _UserLikeRepo;
-		private readonly IUserRepo _UserRepo;
+		private readonly IUnitOfWork _UnitOfWork;
 
-		public LikeController(IUserLikeRepo userLikeRepo,IUserRepo userRepo) 
+		public LikeController(IUnitOfWork unitOfWork) 
 		{
-			_UserLikeRepo = userLikeRepo;
-			_UserRepo = userRepo;
+			_UnitOfWork = unitOfWork;
 		}
 
 		[HttpPost("{UserName}")]
@@ -29,14 +28,14 @@ namespace DAtingApp.Controllers
 		{
 			var SourceUserId =  new Guid(User.GetUserId());
 
-			var LikedUser = await _UserRepo.GetUserByUserNameAsync(UserName);
+			var LikedUser = await _UnitOfWork._UserRepo.GetUserByUserNameAsync(UserName);
 
-			var SourceUser = await _UserLikeRepo.GetUsersWithLikes(SourceUserId);
+			var SourceUser = await _UnitOfWork._UserLikeRepo.GetUsersWithLikes(SourceUserId);
 
 			if (LikedUser == null) return NotFound();
 			if (SourceUser.UserName == UserName) return BadRequest("you can not like your self");
 
-			var userLike = await _UserLikeRepo.GetUserLikeAsync(SourceUserId, LikedUser.Id);
+			var userLike = await _UnitOfWork._UserLikeRepo.GetUserLikeAsync(SourceUserId, LikedUser.Id);
 
 			if (userLike != null) return BadRequest("you already liked this user");
 
@@ -49,7 +48,7 @@ namespace DAtingApp.Controllers
 			
 			SourceUser.LikedUsers.Add(userLike);
 
-			if (await _UserRepo.SaveAllAsync()) return Ok();
+			if (await _UnitOfWork.Completes()) return Ok();
 
 			return BadRequest("failed to like user");
 			
@@ -60,7 +59,7 @@ namespace DAtingApp.Controllers
 		public async Task<ActionResult<PageList<LikeDTO>>> GetUserLikes([FromQuery] LikeParams likeParams)
 		{
 			likeParams.UserId = new Guid(User.GetUserId());
-			var user = await _UserLikeRepo.GetUserLikes(likeParams);
+			var user = await _UnitOfWork._UserLikeRepo.GetUserLikes(likeParams);
 			Response.AddPaginationHeader(new PaginationHeader(user.CurrentPage,user.PageSize,
 				user.TotalCount, user.TotalPages));
 

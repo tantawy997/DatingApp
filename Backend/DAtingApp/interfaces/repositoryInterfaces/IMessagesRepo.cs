@@ -15,7 +15,7 @@ namespace DAtingApp.interfaces.repositoryInterfaces
 		Task<PageList<MessageDTO>> GetMessagesForUser(MessageParams messageParams);
 
 		Task<IEnumerable<MessageDTO>> GetMessagesThread(string CurrentUserName, string RecipientUserName);
-		Task<bool> SaveAllAsync();
+		//Task<bool> SaveAllAsync();
 
 		void AddGroup(Group group);
 

@@ -4,6 +4,7 @@ using DAtingApp.Entites;
 using DAtingApp.extensions;
 using DAtingApp.helpers;
 using DAtingApp.interfaces.repositoryInterfaces;
+using DAtingApp.UnitOfWorkRepo;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,15 +14,14 @@ namespace DAtingApp.Controllers
 	//[ApiController]
 	public class MessageController : ApiControllerBase
 	{
-		private readonly IUserRepo _UserRepo;
-		private readonly IMapper _Mapper;
-		private readonly IMessagesRepo _MessagesRepo;
 
-		public MessageController(IUserRepo userRepo, IMapper mapper, IMessagesRepo messagesRepo)
+		private readonly IUnitOfWork _UnitOfWork;
+		private readonly IMapper _Mapper;
+
+		public MessageController(IUnitOfWork unitOfWork,IMapper mapper)
 		{
-			_UserRepo = userRepo;
+			_UnitOfWork = unitOfWork;
 			_Mapper = mapper;
-			_MessagesRepo = messagesRepo;
 		}
 
 		[HttpPost]
@@ -34,8 +34,8 @@ namespace DAtingApp.Controllers
 				return BadRequest("You can not send messages to yourself");
 			}
 
-			var sender = await _UserRepo.GetUserByUserNameAsync(username);
-			var Recipient = await _UserRepo.GetUserByUserNameAsync(createMessage.RecipientUserName);
+			var sender = await _UnitOfWork._UserRepo.GetUserByUserNameAsync(username);
+			var Recipient = await _UnitOfWork._UserRepo.GetUserByUserNameAsync(createMessage.RecipientUserName);
 
 			if (Recipient == null) return NotFound();
 
@@ -49,9 +49,9 @@ namespace DAtingApp.Controllers
 
 			};
 
-			_MessagesRepo.AddMessage(message);
+			_UnitOfWork._MessagesRepo.AddMessage(message);
 
-			if (await _MessagesRepo.SaveAllAsync()) return Ok(_Mapper.Map<MessageDTO>(message));
+			if (await _UnitOfWork.Completes()) return Ok(_Mapper.Map<MessageDTO>(message));
 
 			return BadRequest("failed to send message");
 
@@ -61,22 +61,22 @@ namespace DAtingApp.Controllers
 		public async Task<ActionResult<PageList<MessageDTO>>> GetMessagesForUser([FromQuery] MessageParams messageParams)
 		{
 			messageParams.UserName = User.GetUserName();
-			var messages = await _MessagesRepo.GetMessagesForUser(messageParams);
+			var messages = await _UnitOfWork._MessagesRepo.GetMessagesForUser(messageParams);
 
 			Response.AddPaginationHeader(new PaginationHeader(messages.CurrentPage, messages.PageSize
 				, messages.TotalCount, messages.TotalPages));
 
 			return Ok(messages);
 		}
-		[HttpGet("thread/{username}")]
-		public async Task<ActionResult<IEnumerable<MessageDTO>>> GetMessagesThread(string username)
-		{
-			var currentUserName = User.GetUserName();
+		//[HttpGet("thread/{username}")]
+		//public async Task<ActionResult<IEnumerable<MessageDTO>>> GetMessagesThread(string username)
+		//{
+		//	var currentUserName = User.GetUserName();
 
-			var messages = await _MessagesRepo.GetMessagesThread(currentUserName, username);
+		//	var messages = await _UnitOfWork._MessagesRepo.GetMessagesThread(currentUserName, username);
 
-			return Ok(messages);
-		}
+		//	return Ok(messages);
+		//}
 
 		[HttpDelete("{id}")]
 
@@ -84,7 +84,7 @@ namespace DAtingApp.Controllers
 		{
 			var username = User.GetUserName();
 
-			var message = await _MessagesRepo.GetMessageAsync(id);
+			var message = await _UnitOfWork._MessagesRepo.GetMessageAsync(id);
 
 			if(message.SenderUserName != username && message.RecipientUserName != username)
 			{
@@ -96,10 +96,10 @@ namespace DAtingApp.Controllers
 
 			if(message.SenderDeleted && message.RecipientDeleted)
 			{
-				_MessagesRepo.DeleteMessage(message);
+				_UnitOfWork._MessagesRepo.DeleteMessage(message);
 			}
 
-			if (await _MessagesRepo.SaveAllAsync()) return Ok();
+			if (await _UnitOfWork.Completes()) return Ok();
 
 			return BadRequest("problem deleting the message");
 		}

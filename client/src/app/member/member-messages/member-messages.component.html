@@ -7,6 +7,9 @@
       no messages here
     </div>
     <ul
+      #scrollMe
+      style="overflow: scroll; height: 500px"
+      [scrollTop]="scrollMe.scrollHeight"
       class="chat"
       *ngIf="(MessagesService.messagesThread$ | async)!.length > 0"
     >

@@ -69,6 +69,13 @@ namespace DAtingApp.Data.repositories
 
 		}
 
+		public Task<string> GetUserGender(string username)
+		{
+			return _Context.Users.Where(u => u.UserName == username)
+				.Select(u => u.Gender).FirstOrDefaultAsync();
+
+		}
+
 		public async Task<IEnumerable<AppUser>> GetUsersAsync()
 		{
 			return await _Context.Users
@@ -76,10 +83,10 @@ namespace DAtingApp.Data.repositories
 				.ToListAsync();
 		}
 
-		public async Task<bool> SaveAllAsync()
-		{
-			return await _Context.SaveChangesAsync() > 0;
-		}
+		//public async Task<bool> SaveAllAsync()
+		//{
+		//	return await _Context.SaveChangesAsync() > 0;
+		//}
 
 		public void Update(AppUser user)
 		{

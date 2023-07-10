@@ -5,6 +5,7 @@ using DAtingApp.interfaces;
 using DAtingApp.interfaces.repositoryInterfaces;
 using DAtingApp.Services;
 using DAtingApp.SginalR;
+using DAtingApp.UnitOfWorkRepo;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAtingApp.extensions
@@ -22,14 +23,15 @@ namespace DAtingApp.extensions
 
 			});
 			services.AddScoped<ITokenService, TokenSerivce>();
-			services.AddScoped<IUserRepo, UserRepo>();
+			//services.AddScoped<IUserRepo, UserRepo>();
 			services.Configure<cloudinarySettings>(configuration.GetSection("cloudinarySettings"));
 			services.AddScoped<IPhotoService, PhotoService>();
 			services.AddScoped<OnActionExcutionAsync>();
-			services.AddScoped<IUserLikeRepo, UserLikeRepo>();
-			services.AddScoped<IMessagesRepo, MessageRepo>();
+			//services.AddScoped<IUserLikeRepo, UserLikeRepo>();
+			//services.AddScoped<IMessagesRepo, MessageRepo>();
 			services.AddSignalR();
 			services.AddSingleton<PresenceTracker>();
+			services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 			return services;
 		}

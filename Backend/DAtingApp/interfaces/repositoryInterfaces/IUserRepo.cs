@@ -14,10 +14,12 @@ namespace DAtingApp.interfaces.repositoryInterfaces
 
 		Task<AppUser> GetUserByUserNameAsync(string UserName);
 
-		Task<bool> SaveAllAsync();
+		//Task<bool> SaveAllAsync();
 
 		Task<PageList<MemberDTO>> GetMembersAsync(UserParams userParams);
 
 		Task<MemberDTO> GetMemberAsync(string UserName);
+
+		Task<string> GetUserGender(string username);
 	}
 }
