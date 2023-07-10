@@ -34,7 +34,9 @@ export class HeaderComponent implements OnInit {
 
   login() {
     this.AccountService.login(this.user).subscribe((response) => {
-      this.router.navigateByUrl('/members/MembersList');
+      //this.router.navigateByUrl('/members/MembersList');
+      this.user = {} as User;
+      location.reload();
     });
   }
 
@@ -42,10 +44,4 @@ export class HeaderComponent implements OnInit {
     this.AccountService.logout();
     this.router.navigateByUrl('/');
   }
-
-  // getCurrentUser() {
-  //   this.AccountService.CurrentUser$.subscribe((res) => {
-  //     this.loggedIn = !!res;
-  //   });
-  // }
 }
