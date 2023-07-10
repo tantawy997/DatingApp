@@ -34,9 +34,7 @@ export class HeaderComponent implements OnInit {
 
   login() {
     this.AccountService.login(this.user).subscribe((response) => {
-      window.location.reload();
-      //this.router.navigateByUrl('/members/MembersList');
-      this.user = {} as User;
+      this.router.navigateByUrl('/members/MembersList');
     });
   }
 
