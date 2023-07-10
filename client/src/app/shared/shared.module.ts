@@ -16,6 +16,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HasRoleDirective } from '../directives/has-role.directive';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     TextInputComponent,
     DatePickerComponent,
     HasRoleDirective,
+    FooterComponent,
   ],
   imports: [
     CommonModule,
@@ -48,6 +50,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     FontAwesomeModule,
     ModalModule,
     HasRoleDirective,
+    FooterComponent,
   ],
 })
 export class SharedModule {}

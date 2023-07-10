@@ -56,7 +56,7 @@ namespace DatingApp.Data
 			.HasOne(src => src.TargetUser)
 			.WithMany(target => target.LikedByUsers)
 			.HasForeignKey(f => f.TargetUserId)
-				.OnDelete(DeleteBehavior.NoAction);
+				.OnDelete(DeleteBehavior.Cascade);
 
 
 			modelBuilder.Entity<Message>()

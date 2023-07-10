@@ -62,20 +62,23 @@ namespace DAtingApp
 			}
 			app.UseCors("AllowAll");
 
-			app.UseStaticFiles();
+			AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 			app.UseHttpsRedirection();
 
 			app.UseAuthentication();
 			app.UseAuthorization();
+			app.UseDefaultFiles();
 
+			app.UseStaticFiles();
 			
+
 			app.MapControllers();
 
 			app.MapHub<PresenseHub>("hubs/presence");
 			app.MapHub<MessageHub>("hubs/message");
 
-
+			app.MapFallbackToController("Index", "FallBack");
 			using var scope = app.Services.CreateScope();
 			var service = scope.ServiceProvider;
 			try
@@ -85,7 +88,9 @@ namespace DAtingApp
 				var roleManager = service.GetRequiredService<RoleManager<AppRole>>();
 
 				await context.Database.MigrateAsync();
-				await context.Database.ExecuteSqlRawAsync("TRUNCATE TABLE [Connections]");
+
+				await SeedDataContext.ClearConnections(context);
+
 				await SeedDataContext.Seed(userManager,context,roleManager);
 
 			}

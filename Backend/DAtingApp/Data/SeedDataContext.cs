@@ -14,8 +14,12 @@ namespace DAtingApp.Data
 {
 	public class SeedDataContext
 	{
-		public static async Task Seed(UserManager<AppUser> userManager,
-			DataContext context,RoleManager<AppRole> roleManager)
+		public static async Task ClearConnections(DataContext context)
+		{
+			context.Connections.RemoveRange(context.Connections);
+			await context.SaveChangesAsync();
+		}
+		public static async Task Seed(UserManager<AppUser> userManager,DataContext context,RoleManager<AppRole> roleManager)
 		{
 			if (await userManager.Users.AnyAsync() 
 				//|| await userManager.Users.CountAsync() > 0
@@ -25,7 +29,7 @@ namespace DAtingApp.Data
 			var users = JsonSerializer.Deserialize<List<AppUser>>(userData);
 
 
-			var mac = new HMACSHA512();
+			//var mac = new HMACSHA512();
 
 			var userphotos = await File.ReadAllTextAsync("Data/JsonFiles/Photos.json");
 			var photos = JsonSerializer.Deserialize<List<Photo>>(userphotos);
@@ -48,6 +52,9 @@ namespace DAtingApp.Data
 			for (int i=0; i < users.Count();i++)
 			{
 				users[i].UserName = users[i].UserName.ToLower();
+				users[i].Created = DateTime.SpecifyKind(users[i].Created, DateTimeKind.Utc);
+				users[i].LastActive = DateTime.SpecifyKind(users[i].LastActive, DateTimeKind.Utc);
+			
 				await userManager.CreateAsync(users[i],"Pa$$w0rd");
 				await userManager.AddToRoleAsync(users[i], "Member");
 
@@ -61,11 +68,10 @@ namespace DAtingApp.Data
 				}
 
 			}
-
-
 			await context.Photos.AddRangeAsync(photos);
 
 			await context.SaveChangesAsync();
+
 			var admin = new AppUser { UserName = "Admin" };
 
 
