@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DAtingApp.Migrations
 {
-    public partial class postgresInitial : Migration
+    public partial class initialPostgres : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

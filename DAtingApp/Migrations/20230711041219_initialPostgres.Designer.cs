@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DAtingApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230710103843_postgresInitial")]
-    partial class postgresInitial
+    [Migration("20230711041219_initialPostgres")]
+    partial class initialPostgres
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
