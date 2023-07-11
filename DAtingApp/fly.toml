@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for datingappv2 on 2023-07-11T07:42:24+03:00
+# fly.toml app configuration file generated for dateapp on 2023-07-11T08:49:04+03:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "datingappv2"
+app = "dateapp"
 primary_region = "cdg"
 
 [build]
@@ -11,9 +11,8 @@ primary_region = "cdg"
 
 [env]
   ASPNETCORE_URLS="http://+:8080"
-
-  cloudinarySettings__CloudName="dq9otw0qy"
-  cloudinarySettings__ApiKey="261852178484167"
+  CloudinarySettings__CloudName="dj3wmuy3l"
+  CloudinarySettings__ApiKey="895484589483755"
 
 
 [http_service]
