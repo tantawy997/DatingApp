@@ -19,6 +19,7 @@ import { NgForm } from '@angular/forms';
 export class MemberMessagesComponent implements OnInit {
   //messages: Message[] = [];
   faClock = faClock;
+  flag: boolean = false;
   @Input() userName: string = '';
   //@Input() messages: Message[] = [];
   messageContent: string = '';
@@ -31,10 +32,11 @@ export class MemberMessagesComponent implements OnInit {
   }
 
   sendMessage() {
-    this.MessagesService.SendMessage(this.messageContent, this.userName).then(
-      () => {
+    this.flag = true;
+    this.MessagesService.SendMessage(this.messageContent, this.userName)
+      .then(() => {
         this.formChat?.resetForm();
-      }
-    );
+      })
+      .finally(() => (this.flag = false));
   }
 }

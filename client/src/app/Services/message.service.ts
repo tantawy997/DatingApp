@@ -7,6 +7,7 @@ import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { User } from '../Models/user';
 import { BehaviorSubject, take } from 'rxjs';
 import { Group } from '../Models/group';
+import { BusyService } from './busy.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,7 @@ export class MessageService {
   >([]);
   messagesThread$ = this.messagesThreadSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private busyService: BusyService) {}
 
   async SendMessage(content: string, username: string) {
     return this.hubConnection
@@ -32,6 +33,7 @@ export class MessageService {
   }
 
   CreateHubConnection(user: User, otherUserUserName: string) {
+    this.busyService.busy();
     this.hubConnection = new HubConnectionBuilder()
       .withUrl(this.HubUrl + 'message?user=' + otherUserUserName, {
         accessTokenFactory: () => user.token,
@@ -39,7 +41,10 @@ export class MessageService {
       .withAutomaticReconnect()
       .build();
 
-    this.hubConnection.start().catch((error) => console.log(error));
+    this.hubConnection
+      .start()
+      .catch((error) => console.log(error))
+      .finally(() => this.busyService.idle());
 
     this.hubConnection.on('receiveMessageThread', (messages) => {
       this.messagesThreadSubject.next(messages);
@@ -65,6 +70,7 @@ export class MessageService {
   }
   stopHubConnection() {
     if (this.hubConnection) {
+      this.messagesThreadSubject.next([]);
       this.hubConnection.stop();
     }
   }
