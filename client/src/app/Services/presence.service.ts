@@ -5,7 +5,7 @@ import {
   HubConnectionBuilder,
 } from '@microsoft/signalr';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.development';
 import { User } from '../Models/user';
 import * as signalR from '@microsoft/signalr';
 import { BehaviorSubject, take } from 'rxjs';

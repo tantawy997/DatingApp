@@ -106,6 +106,7 @@ namespace DAtingApp
 			app.MapHub<MessageHub>("hubs/message");
 
 			app.MapFallbackToController("Index", "FallBack");
+
 			using var scope = app.Services.CreateScope();
 			var service = scope.ServiceProvider;
 			try

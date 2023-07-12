@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace DAtingApp.Migrations
+namespace api.Migrations
 {
     public partial class initialPostgres : Migration
     {

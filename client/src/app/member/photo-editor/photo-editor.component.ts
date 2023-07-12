@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Member } from 'src/app/Models/member';
 import { faTrash, faUpload, faBan } from '@fortawesome/free-solid-svg-icons';
 import { FileUploader } from 'ng2-file-upload';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.development';
 import { User } from 'src/app/Models/user';
 import { AccountService } from 'src/app/Services/Account.service';
 import { MemberService } from 'src/app/Services/member.service';

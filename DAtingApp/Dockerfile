@@ -25,6 +25,6 @@ WORKDIR /app
 
 COPY --from=build-env /app/out .
 
-ENTRYPOINT [ "dotnet", "DAtingApp.dll"]
+ENTRYPOINT [ "dotnet", "api.dll"]
 
 
