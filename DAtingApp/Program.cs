@@ -74,7 +74,8 @@ namespace DAtingApp
 							.AllowAnyMethod()
 							.AllowAnyHeader()
 							.AllowCredentials()
-							.WithOrigins("https://localhost:4200");
+							.AllowAnyOrigin();
+							////.WithOrigins("https://localhost:4200");
 					});
 			});
 			builder.Services.AddHttpContextAccessor();
@@ -91,7 +92,7 @@ namespace DAtingApp
 
 			AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-			app.UseHttpsRedirection();
+			//app.UseHttpsRedirection();
 
 			app.UseAuthentication();
 			app.UseAuthorization();
