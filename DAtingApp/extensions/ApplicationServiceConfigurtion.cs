@@ -18,11 +18,11 @@ namespace DAtingApp.extensions
 		{
 			services.AddAuthorization();
 
-			//services.AddDbContext<DataContext>(o =>
-			//{
-			//	o.UseNpgsql(configuration.GetConnectionString("co1"));
+			services.AddDbContext<DataContext>(o =>
+			{
+				o.UseNpgsql(configuration.GetConnectionString("co1"));
 
-			//});
+			});
 
 			services.AddScoped<ITokenService, TokenSerivce>();
 			//services.AddScoped<IUserRepo, UserRepo>();
