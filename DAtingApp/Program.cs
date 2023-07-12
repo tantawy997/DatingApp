@@ -24,8 +24,8 @@ namespace DAtingApp
 
 			// Add services to the container.
 
-			builder.Services.AddApplicationService(builder.Configuration);
 			builder.Services.AddControllers();
+			builder.Services.AddApplicationService(builder.Configuration);
 			
 			builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 			
@@ -74,8 +74,8 @@ namespace DAtingApp
 							.AllowAnyMethod()
 							.AllowAnyHeader()
 							.AllowCredentials()
-							.AllowAnyOrigin();
-							////.WithOrigins("https://localhost:4200");
+							//.AllowAnyOrigin();
+							.WithOrigins("https://localhost:4200");
 					});
 			});
 			builder.Services.AddHttpContextAccessor();
@@ -92,7 +92,6 @@ namespace DAtingApp
 
 			AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-			//app.UseHttpsRedirection();
 
 			app.UseAuthentication();
 			app.UseAuthorization();
