@@ -21,7 +21,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: "{{defaultContext}}:api"
+          context: "{{defaultContext}}:DAtingApp"
           push: true
           tags: tantawy97/datingapp:latest
 
