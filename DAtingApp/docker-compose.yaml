@@ -1,0 +1,40 @@
+version: "3.5"
+networks:
+  dev:
+    driver: bridge
+
+services:
+  datingapp:
+    container_name: postgres
+    image: docker.io/library/datingapp
+    depends_on:
+      - datingapp_db
+    ports:
+      - "8088:80"
+    environment:
+      - ConnectionStrings__co1=User Id=postgres;Password=postgrespw;Server=datingapp_db;port=5432;Database=dateapp;IntegratedSecurity=true;Pooling=true;
+      - ASPNETCORE_URLS=http://+80
+    networks:
+      - dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+  datingapp_db:
+    image: postgres:latest
+    container_name: datingapp_db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgrespw
+      - POSTGRES_DB=dateapp
+    ports:
+      - "5433:5432"
+    restart: always
+
+    volumes:
+      - app_data:/var/lib/postgresql/data
+    networks:
+      - dev
+
+volumes:
+  app_data:

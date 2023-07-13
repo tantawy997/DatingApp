@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpTransportType,
-  HubConnection,
-  HubConnectionBuilder,
-} from '@microsoft/signalr';
+import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from 'src/environments/environment.development';
+// import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 import { User } from '../Models/user';
-import * as signalR from '@microsoft/signalr';
 import { BehaviorSubject, take } from 'rxjs';
 import { Router } from '@angular/router';
 

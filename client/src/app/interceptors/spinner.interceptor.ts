@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import { Observable, delay, finalize, identity } from 'rxjs';
 import { BusyService } from '../Services/busy.service';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class SpinnerInterceptor implements HttpInterceptor {
