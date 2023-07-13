@@ -9,12 +9,12 @@ primary_region = "lhr"
 [build]
   image = "tantawy97/datingapp:latest"
 
-ASPNETCORE_URLS="http://+:8080"
+ASPNETCORE_URLS="http://+:8088"
 CloudinarySettings__CloudName="dq9otw0qy"
 CloudinarySettings__ApiKey="261852178484167"
 
 [http_service]
-  internal_port = 8080
+  internal_port = 8088
   force_https = true
   auto_stop_machines = true
   auto_start_machines = true
