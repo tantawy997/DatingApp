@@ -1,20 +1,21 @@
-# fly.toml app configuration file generated for dat-ing on 2023-07-13T09:29:20+03:00
+# fly.toml app configuration file generated for dateapp on 2023-07-13T11:13:58+03:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "dat-ing"
+app = "dateapp"
 primary_region = "lhr"
 
 [build]
   image = "tantawy97/datingapp:latest"
 
-ASPNETCORE_URLS="http://+:8088"
+ASPNETCORE_URLS="http://+:8080"
 CloudinarySettings__CloudName="dq9otw0qy"
 CloudinarySettings__ApiKey="261852178484167"
 
+
 [http_service]
-  internal_port = 8088
+  internal_port = 8080
   force_https = true
   auto_stop_machines = true
   auto_start_machines = true

@@ -6,11 +6,11 @@ networks:
 services:
   datingapp:
     container_name: postgres
-    image: docker.io/library/datingapp
+    image: docker.io/tantawy97/datingapp:latest
     depends_on:
       - datingapp_db
     ports:
-      - "8088:80"
+      - "8080:80"
     environment:
       - ConnectionStrings__co1=User Id=postgres;Password=postgrespw;Server=datingapp_db;port=5432;Database=dateapp;IntegratedSecurity=true;Pooling=true;
       - ASPNETCORE_URLS=http://+80
@@ -21,7 +21,7 @@ services:
       dockerfile: Dockerfile
 
   datingapp_db:
-    image: postgres:latest
+    image: tantawy97/postgres:latest
     container_name: datingapp_db
     environment:
       - POSTGRES_USER=postgres
