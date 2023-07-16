@@ -7,15 +7,15 @@ namespace DAtingApp.Entites
 	public class Message
 	{
 		[Key]
-		public Guid Id { get; set; }
+		public int Id { get; set; }
 
-		public Guid SenderId { get; set; }
+		public int SenderId { get; set; }
 
 		public string SenderUserName { get; set; }
 
 		public AppUser Sender { get; set; }
 
-		public Guid RecipientId { get; set; }
+		public int RecipientId { get; set; }
 
 		public string RecipientUserName { get; set; }
 

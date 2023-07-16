@@ -2,7 +2,7 @@
 {
 	public class LikeParams :PaginationParams
 	{
-		public Guid UserId { get; set; }
+		public int UserId { get; set; }
 
 		public string Predicate { get; set; }
 

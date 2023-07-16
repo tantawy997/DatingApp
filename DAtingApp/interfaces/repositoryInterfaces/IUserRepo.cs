@@ -10,7 +10,7 @@ namespace DAtingApp.interfaces.repositoryInterfaces
 
 		Task<IEnumerable<AppUser>> GetUsersAsync();
 
-		Task<AppUser> GetUserByIdAsync(Guid id);
+		Task<AppUser> GetUserByIdAsync(int id);
 
 		Task<AppUser> GetUserByUserNameAsync(string UserName);
 

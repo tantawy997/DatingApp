@@ -47,7 +47,7 @@ namespace DAtingApp.Data.repositories
 				.FirstOrDefaultAsync();
 		}
 
-		public async Task<Message> GetMessageAsync(Guid messageId)
+		public async Task<Message> GetMessageAsync(int messageId)
 		{
 			return	await _Context.Messages.FindAsync(messageId);
 		}

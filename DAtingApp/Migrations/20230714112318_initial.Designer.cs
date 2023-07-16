@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DAtingApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230712082344_initial")]
+    [Migration("20230714112318_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,9 +26,11 @@ namespace DAtingApp.Migrations
 
             modelBuilder.Entity("DAtingApp.Entites.AppRole", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -53,9 +55,11 @@ namespace DAtingApp.Migrations
 
             modelBuilder.Entity("DatingApp.Entites.AppUser", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
@@ -148,11 +152,11 @@ namespace DAtingApp.Migrations
 
             modelBuilder.Entity("DAtingApp.Entites.AppUserRole", b =>
                 {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
 
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -191,9 +195,11 @@ namespace DAtingApp.Migrations
 
             modelBuilder.Entity("DAtingApp.Entites.Message", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Content")
                         .HasColumnType("text");
@@ -207,8 +213,8 @@ namespace DAtingApp.Migrations
                     b.Property<bool>("RecipientDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("RecipientId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("RecipientId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("RecipientUserName")
                         .HasColumnType("text");
@@ -216,8 +222,8 @@ namespace DAtingApp.Migrations
                     b.Property<bool>("SenderDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("SenderId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("SenderId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("SenderUserName")
                         .HasColumnType("text");
@@ -233,9 +239,11 @@ namespace DAtingApp.Migrations
 
             modelBuilder.Entity("DatingApp.Entites.Photo", b =>
                 {
-                    b.Property<Guid>("PhotoId")
+                    b.Property<int>("PhotoId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PhotoId"));
 
                     b.Property<bool>("IsMain")
                         .HasColumnType("boolean");
@@ -246,8 +254,8 @@ namespace DAtingApp.Migrations
                     b.Property<string>("Url")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
 
                     b.HasKey("PhotoId");
 
@@ -258,11 +266,11 @@ namespace DAtingApp.Migrations
 
             modelBuilder.Entity("DAtingApp.Entites.UserLike", b =>
                 {
-                    b.Property<Guid>("SourceUserId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("SourceUserId")
+                        .HasColumnType("integer");
 
-                    b.Property<Guid>("TargetUserId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("TargetUserId")
+                        .HasColumnType("integer");
 
                     b.HasKey("SourceUserId", "TargetUserId");
 
@@ -271,7 +279,7 @@ namespace DAtingApp.Migrations
                     b.ToTable("Likes");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -285,8 +293,8 @@ namespace DAtingApp.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -295,7 +303,7 @@ namespace DAtingApp.Migrations
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -309,8 +317,8 @@ namespace DAtingApp.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -319,7 +327,7 @@ namespace DAtingApp.Migrations
                     b.ToTable("AspNetUserClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("text");
@@ -330,8 +338,8 @@ namespace DAtingApp.Migrations
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -340,10 +348,10 @@ namespace DAtingApp.Migrations
                     b.ToTable("AspNetUserLogins", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("LoginProvider")
                         .HasColumnType("text");
@@ -434,7 +442,7 @@ namespace DAtingApp.Migrations
                     b.Navigation("TargetUser");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("DAtingApp.Entites.AppRole", null)
                         .WithMany()
@@ -443,7 +451,7 @@ namespace DAtingApp.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.HasOne("DatingApp.Entites.AppUser", null)
                         .WithMany()
@@ -452,7 +460,7 @@ namespace DAtingApp.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.HasOne("DatingApp.Entites.AppUser", null)
                         .WithMany()
@@ -461,7 +469,7 @@ namespace DAtingApp.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
                     b.HasOne("DatingApp.Entites.AppUser", null)
                         .WithMany()

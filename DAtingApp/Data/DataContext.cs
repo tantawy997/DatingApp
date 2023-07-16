@@ -11,9 +11,9 @@ using System.Threading.Tasks.Dataflow;
 
 namespace DatingApp.Data
 {
-	public class DataContext : IdentityDbContext<AppUser, AppRole,Guid,
-		IdentityUserClaim<Guid>, AppUserRole,IdentityUserLogin<Guid>,IdentityRoleClaim<Guid>
-		,IdentityUserToken<Guid>>
+	public class DataContext : IdentityDbContext<AppUser, AppRole,int,
+		IdentityUserClaim<int>, AppUserRole,IdentityUserLogin<int>,IdentityRoleClaim<int>
+		,IdentityUserToken<int>>
 	{
 		public DataContext(DbContextOptions<DataContext> options) : base(options)
 		{

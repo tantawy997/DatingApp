@@ -14,7 +14,7 @@ namespace DAtingApp.helpers
 
 			if (!ExcutionResult.HttpContext.User.Identity.IsAuthenticated) return;
 
-			var username = ExcutionResult.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+			var username = ExcutionResult.HttpContext.User.GetUserName();
 			///User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 			var unitOfWork = ExcutionResult.HttpContext.RequestServices.GetRequiredService<IUnitOfWork>();
 

@@ -92,7 +92,7 @@ namespace DatingApp.Controller
 		[HttpPut]
 		public async Task<ActionResult> UpdateUserAsync(UpdateUserDto updateUserDto)
 		{
-			var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+			var username = User.GetUserName();
 
 			var UserData = await _UnitOfWork._UserRepo.GetUserByUserNameAsync(username);
 
@@ -112,7 +112,7 @@ namespace DatingApp.Controller
 
 		public async Task<ActionResult<PhotoDTO>> AddPhotoAsync(IFormFile file)
 		{
-			var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+			var username = User.GetUserName();
 
 			var UserData = await _UnitOfWork._UserRepo.GetUserByUserNameAsync(username);
 			
@@ -144,9 +144,9 @@ namespace DatingApp.Controller
 
 		[HttpPut("set-main-photo/{PhotoId}")]
 
-		public async Task<ActionResult> SetMainPhoto(Guid PhotoId)
+		public async Task<ActionResult> SetMainPhoto(int PhotoId)
 		{
-			var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+			var username = User.GetUserName();
 
 			var UserData = await _UnitOfWork._UserRepo.GetUserByUserNameAsync(username);
 
@@ -172,9 +172,9 @@ namespace DatingApp.Controller
 		}
 		[HttpDelete("delete-photo/{PhotoId}")]
 
-		public async Task<ActionResult> DeletePhoto(Guid PhotoId)
+		public async Task<ActionResult> DeletePhoto(int PhotoId)
 		{
-			var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+			var username = User.GetUserName();
 
 			var UserData = await _UnitOfWork._UserRepo.GetUserByUserNameAsync(username);
 

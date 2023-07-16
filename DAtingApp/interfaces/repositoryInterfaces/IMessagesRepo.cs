@@ -10,7 +10,7 @@ namespace DAtingApp.interfaces.repositoryInterfaces
 
 		void DeleteMessage(Message message);
 
-		Task<Message> GetMessageAsync(Guid messageId);
+		Task<Message> GetMessageAsync(int messageId);
 
 		Task<PageList<MessageDTO>> GetMessagesForUser(MessageParams messageParams);
 

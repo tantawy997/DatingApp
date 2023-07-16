@@ -96,7 +96,7 @@ export class MemberService {
     );
   }
 
-  deletePhoto(photoId: string) {
+  deletePhoto(photoId: number) {
     return this.http.delete(this.baseUrl + 'Users/delete-photo/' + photoId);
   }
 

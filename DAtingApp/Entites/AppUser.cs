@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DatingApp.Entites
 {
-	public class AppUser : IdentityUser<Guid>
+	public class AppUser : IdentityUser<int>
 	{
 
 		public DateTime DateOfBirth { get; set; }

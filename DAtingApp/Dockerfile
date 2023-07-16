@@ -4,9 +4,9 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 as build-env
 WORKDIR /app
 
 EXPOSE 8080
-EXPOSE 8088
-EXPOSE 80
-EXPOSE 443
+# EXPOSE 8088
+# EXPOSE 80
+# EXPOSE 443
 
 # copy csproj and restore as distinct layers
 

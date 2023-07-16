@@ -60,7 +60,6 @@ namespace DAtingApp.Data
 
 				for (int j = 0; j <= i; j++)
 				{
-					photos[j].PhotoId = Guid.NewGuid();
 					photos[j].IsMain = photos[j].IsMain;
 					photos[j].Url = photos[j].Url;
 					photos[j].UserId = users[j].Id;

@@ -7,9 +7,9 @@ namespace DAtingApp.interfaces.repositoryInterfaces
 {
 	public interface IUserLikeRepo
 	{
-		Task<UserLike> GetUserLikeAsync(Guid SourceLikeId,Guid TargetLikeId);
+		Task<UserLike> GetUserLikeAsync(int SourceLikeId,int TargetLikeId);
 
-		Task<AppUser> GetUsersWithLikes(Guid UserId);
+		Task<AppUser> GetUsersWithLikes(int UserId);
 
 		Task<PageList<LikeDTO>> GetUserLikes(LikeParams likeParams); 
 	}

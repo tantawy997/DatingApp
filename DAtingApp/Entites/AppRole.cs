@@ -2,7 +2,7 @@
 
 namespace DAtingApp.Entites
 {
-	public class AppRole : IdentityRole<Guid>
+	public class AppRole : IdentityRole<int>
 	{
 		public ICollection<AppUserRole> UserRoles { get; set; }
 	}

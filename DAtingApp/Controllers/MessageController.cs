@@ -80,7 +80,7 @@ namespace DAtingApp.Controllers
 
 		[HttpDelete("{id}")]
 
-		public async Task<ActionResult> DeleteMessage(Guid id)
+		public async Task<ActionResult> DeleteMessage(int id)
 		{
 			var username = User.GetUserName();
 

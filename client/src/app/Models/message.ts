@@ -1,9 +1,9 @@
 export interface Message {
-  id: string;
-  senderId: string;
+  id: number;
+  senderId: number;
   senderUserName: string;
   senderPhotoUrl: string;
-  recipientId: string;
+  recipientId: number;
   recipientUserName: string;
   recipientPhotoUrl: string;
   content: string;

@@ -52,7 +52,7 @@ namespace DAtingApp.Data.repositories
 
 		}
 
-		public async Task<AppUser> GetUserByIdAsync(Guid id)
+		public async Task<AppUser> GetUserByIdAsync(int id)
 		{
 			//return await _Context.Users
 			//	.Include(user =>user.photos)

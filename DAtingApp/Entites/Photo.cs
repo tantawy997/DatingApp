@@ -7,13 +7,13 @@ namespace DatingApp.Entites
 	public class Photo
 	{
 		[Key]
-		public Guid PhotoId { get; set; }
+		public int PhotoId { get; set; }
 		public string Url { get; set; }
 		public bool IsMain { get; set; }
 		public string PublicId { get; set; }
 
 		[ForeignKey("AppUser")]
-		public Guid UserId { get; set; }
+		public int UserId { get; set; }
 
 		public AppUser AppUser { get; set; }
 	}

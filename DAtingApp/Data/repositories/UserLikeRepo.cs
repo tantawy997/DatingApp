@@ -17,7 +17,7 @@ namespace DAtingApp.Data.repositories
 		{
 			_Context = context;
 		}
-		public async Task<UserLike> GetUserLikeAsync(Guid SourceLikeId, Guid TargetLikeId)
+		public async Task<UserLike> GetUserLikeAsync(int SourceLikeId, int TargetLikeId)
 		{
 			return await _Context.Likes.FindAsync(SourceLikeId, TargetLikeId);
 		}
@@ -53,7 +53,7 @@ namespace DAtingApp.Data.repositories
 			return	await PageList<LikeDTO>.CreateAsync(likedUsers, likeParams.PageNumber, likeParams.PageSize);
 		}
 
-		public async Task<AppUser> GetUsersWithLikes(Guid UserId)
+		public async Task<AppUser> GetUsersWithLikes(int UserId)
 		{
 			return await _Context.Users.Include(u => u.LikedUsers)
 				.FirstOrDefaultAsync(u => u.Id == UserId);

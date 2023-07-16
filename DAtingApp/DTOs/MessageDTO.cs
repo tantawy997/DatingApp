@@ -4,14 +4,14 @@ namespace DAtingApp.DTOs
 {
 	public class MessageDTO
 	{
-		public Guid Id { get; set; }
+		public int Id { get; set; }
 
-		public Guid SenderId { get; set; }
+		public int SenderId { get; set; }
 
 		public string SenderUserName { get; set; }
 		public string SenderPhotoUrl { get; set; }
 
-		public Guid RecipientId { get; set; }
+		public int RecipientId { get; set; }
 		public string RecipientUserName { get; set; }
 		
 		public string RecipientPhotoUrl { get; set; }

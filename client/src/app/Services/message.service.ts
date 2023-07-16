@@ -94,7 +94,7 @@ export class MessageService {
     );
   }
 
-  deleteMessage(id: string) {
+  deleteMessage(id: number) {
     return this.http.delete(this.baseUrl + 'Message/' + id);
   }
 }

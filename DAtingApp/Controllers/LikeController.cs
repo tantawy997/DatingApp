@@ -26,7 +26,7 @@ namespace DAtingApp.Controllers
 		[HttpPost("{UserName}")]
 		public async Task<ActionResult<string>> AddLike(string UserName)
 		{
-			var SourceUserId =  new Guid(User.GetUserId());
+			var SourceUserId =  User.GetUserId();
 
 			var LikedUser = await _UnitOfWork._UserRepo.GetUserByUserNameAsync(UserName);
 
@@ -58,7 +58,7 @@ namespace DAtingApp.Controllers
 
 		public async Task<ActionResult<PageList<LikeDTO>>> GetUserLikes([FromQuery] LikeParams likeParams)
 		{
-			likeParams.UserId = new Guid(User.GetUserId());
+			likeParams.UserId = User.GetUserId();
 			var user = await _UnitOfWork._UserLikeRepo.GetUserLikes(likeParams);
 			Response.AddPaginationHeader(new PaginationHeader(user.CurrentPage,user.PageSize,
 				user.TotalCount, user.TotalPages));

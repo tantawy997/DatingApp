@@ -1,7 +1,7 @@
 import { Photo } from './photo';
 
 export interface Member {
-  id: string;
+  id: number;
   userName: string;
   age: number;
   knownAs: string;
