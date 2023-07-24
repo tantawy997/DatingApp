@@ -46,3 +46,19 @@
   animation: fa-blink 1.5s linear infinite;
   color: rgb(1, 189, 42);
 }
+
+@media (max-width: 1000px) {
+  /*Small smartphones [325px -> 425px]*/
+
+  .custom-text {
+    font-size: small;
+  }
+}
+
+@media (max-width: 800px) {
+  /*Small smartphones [325px -> 425px]*/
+
+  .custom-text {
+    font-size: x-small;
+  }
+}

@@ -1,0 +1,31 @@
+.custom-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (max-width: 1000px) {
+  /*Small smartphones [325px -> 425px]*/
+  .custom-label {
+    font-size: smaller;
+  }
+  .custom-input {
+    font-size: smaller;
+  }
+  .custom-btn {
+    font-size: smaller;
+  }
+}
+
+@media (max-width: 700px) {
+  /*Small smartphones [325px -> 425px]*/
+  .custom-label {
+    font-size: x-small;
+  }
+  .custom-input {
+    font-size: x-small;
+  }
+  .custom-btn {
+    font-size: x-small;
+  }
+}

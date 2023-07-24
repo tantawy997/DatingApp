@@ -1,80 +1,84 @@
-<div class="row">
-  <div class="col-4">
-    <div class="card">
-      <img
-        [src]="member.photoUrl || 'assets/user.png'"
-        [alt]="member.knownAs"
-        class="card-img-top img-thumbnail"
-      />
-      <div class="card-body">
-        <div
-          class="mb-2"
-          *ngIf="
-            (presenceService.onLineUsers$ | async)?.includes(member.userName)
-          "
-        >
-          <fa-icon
-            class="me-2 fa-user-circle text-success"
-            [icon]="faUser"
-          ></fa-icon>
-          online now
-        </div>
-        <div>
-          <strong>location: </strong>
-          <p>{{ member.city }}, {{ member.country }}</p>
-        </div>
-        <div>
-          <strong>age: </strong>
-          <p>{{ member.age }}</p>
-        </div>
-        <div>
-          <strong>last active: </strong>
-          <p>{{ member.lastActive | dateAgo }}</p>
-        </div>
-        <div>
-          <strong>member since: </strong>
-          <p>{{ member.created | dateAgo }}</p>
-        </div>
+<section class="container-fluid">
+  <div class="row">
+    <div class="col-lg-4 col-md-5 col-sm-5">
+      <div class="card">
+        <img
+          [src]="member.photoUrl || 'assets/user.png'"
+          [alt]="member.knownAs"
+          class="card-img-top img-thumbnail"
+        />
+        <div class="card-body">
+          <div
+            class="mb-2"
+            *ngIf="
+              (presenceService.onLineUsers$ | async)?.includes(member.userName)
+            "
+          >
+            <fa-icon
+              class="me-1 fa-user-circle text-success"
+              [icon]="faUser"
+            ></fa-icon>
+            online now
+          </div>
+          <div>
+            <strong>location: </strong>
+            <p>{{ member.city }}, {{ member.country }}</p>
+          </div>
+          <div>
+            <strong>age: </strong>
+            <p>{{ member.age }}</p>
+          </div>
+          <div>
+            <strong>last active: </strong>
+            <p>{{ member.lastActive | dateAgo }}</p>
+          </div>
+          <div>
+            <strong>member since: </strong>
+            <p>{{ member.created | dateAgo }}</p>
+          </div>
 
-        <div class="card-footer">
-          <div class="btn-group d-flex">
-            <a class="btn btn-info btn-sm" role="button">like</a>
-            <a
-              class="btn btn-success btn-sm"
-              role="button"
-              (click)="selectTab('Messages')"
-              >Messages</a
-            >
+          <div class="card-footer">
+            <div class="btn-group d-flex">
+              <a class="btn btn-info btn-sm" role="button">like</a>
+              <a
+                class="btn btn-success btn-sm"
+                role="button"
+                (click)="selectTab('Messages')"
+                >Messages</a
+              >
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="col-lg-8 col-md-7 col-sm-7">
+      <tabset class="member-tabset" #memberTabs>
+        <tab
+          [heading]="'About ' + member.knownAs"
+          (selectTab)="onActivated($event)"
+        >
+          <h4>Description</h4>
+          <p>{{ member.introduction }}</p>
+          <h4>Looking for</h4>
+          <p>{{ member.lookingFor }}</p>
+        </tab>
+        <tab heading="Interests" (selectTab)="onActivated($event)">
+          <h4>Interests</h4>
+          <p>{{ member.interests }}</p>
+        </tab>
+        <tab heading="Photos" (selectTab)="onActivated($event)">
+          <ngx-gallery
+            [options]="galleryOptions"
+            [images]="galleryImages"
+            class="ngx-gallery"
+          ></ngx-gallery>
+        </tab>
+        <tab heading="Messages" (selectTab)="onActivated($event)">
+          <app-member-messages
+            [userName]="member.userName"
+          ></app-member-messages>
+        </tab>
+      </tabset>
+    </div>
   </div>
-  <div class="col-8">
-    <tabset class="member-tabset" #memberTabs>
-      <tab
-        [heading]="'About ' + member.knownAs"
-        (selectTab)="onActivated($event)"
-      >
-        <h4>Description</h4>
-        <p>{{ member.introduction }}</p>
-        <h4>Looking for</h4>
-        <p>{{ member.lookingFor }}</p>
-      </tab>
-      <tab heading="Interests" (selectTab)="onActivated($event)">
-        <h4>Interests</h4>
-        <p>{{ member.interests }}</p>
-      </tab>
-      <tab heading="Photos" (selectTab)="onActivated($event)">
-        <ngx-gallery
-          [options]="galleryOptions"
-          [images]="galleryImages"
-          class="ngx-gallery"
-        ></ngx-gallery>
-      </tab>
-      <tab heading="Messages" (selectTab)="onActivated($event)">
-        <app-member-messages [userName]="member.userName"></app-member-messages>
-      </tab>
-    </tabset>
-  </div>
-</div>
+</section>

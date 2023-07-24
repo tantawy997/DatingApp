@@ -5,3 +5,9 @@
 input[type="file"] {
   color: transparent;
 }
+
+.custom-flx {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

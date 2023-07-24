@@ -1,0 +1,13 @@
+@media only screen and (max-width: 500px) {
+  /*Small smartphones [325px -> 425px]*/
+  .custom-btn {
+    font-size: 10px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  /*Small smartphones [325px -> 425px]*/
+  .custom-btn {
+    font-size: 6px;
+  }
+}

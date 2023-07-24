@@ -62,9 +62,9 @@ namespace DAtingApp
 
 
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-			//builder.Services.AddEndpointsApiExplorer();
-			//builder.Services.AddSwaggerGen();
-			//builder.Services.AddSwaggerService();
+			builder.Services.AddEndpointsApiExplorer();
+			builder.Services.AddSwaggerGen();
+			builder.Services.AddSwaggerService();
 
 			builder.Services.AddCors(options =>
 			{
@@ -78,7 +78,7 @@ namespace DAtingApp
 							.AllowAnyHeader()
 							.AllowCredentials()
 							//.AllowAnyOrigin();
-							.WithOrigins("https://localhost:4200/");
+							.WithOrigins("https://localhost:4200");
 					});
 			});
 			//builder.Services.AddHttpContextAccessor();

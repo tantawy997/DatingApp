@@ -3,38 +3,49 @@
 </div>
 
 <div class="container mt-3" *ngIf="userParam">
-  <form class="mb-3 d-flex" #ngForm="ngForm" (ngSubmit)="LoadMembers()">
-    <div class="d-flex mx-2">
-      <label class="col-form-label">age from: </label>
+  <form class="mb-3 row" #ngForm="ngForm" (ngSubmit)="LoadMembers()">
+    <div class="col-4 mx-2 mb-2 custom-div">
+      <label class="col-form-label custom-label">age from: </label>
       <input
         [(ngModel)]="userParam.minAge"
         type="number"
-        class="form-control ms-1"
+        class="form-control ms-1 custom-input"
         style="width: 70px"
         name="minAge"
         placeholder="minimum Age"
       />
     </div>
-    <div class="d-flex mx-2">
-      <label class="col-form-label">age to: </label>
+    <div class="col-4 mx-2 mb-2 custom-div">
+      <label class="col-form-label custom-label">age to: </label>
       <input
         [(ngModel)]="userParam.maxAge"
         type="number"
-        class="form-control ms-1"
+        class="form-control ms-1 custom-input"
         style="width: 70px"
         name="maxAge"
         placeholder="minimum Age"
       />
     </div>
-    <button class="btn btn-primary ms-1" type="submit">Apply Filter</button>
-    <button class="btn btn-info ms-1" (click)="ResetFilters()" type="submit">
-      Reset Filter
-    </button>
-    <div class="col">
+    <div class="col-6 row">
+      <button
+        class="me-2 col btn btn-sm btn-primary ms-1 custom-btn"
+        type="submit"
+      >
+        Apply Filter
+      </button>
+      <button
+        class="btn col btn-sm btn-info ms-1 custom-btn"
+        (click)="ResetFilters()"
+        type="submit"
+      >
+        Reset Filter
+      </button>
+    </div>
+    <div class="col-6">
       <div class="btn-group float-end">
         <button
           type="button"
-          class="btn btn-primary"
+          class="btn btn-primary btn-sm custom-btn"
           (click)="LoadMembers()"
           [(ngModel)]="userParam.orderBy"
           name="orderBy"
@@ -44,7 +55,7 @@
         </button>
         <button
           type="button"
-          class="btn btn-primary"
+          class="btn btn-primary btn-sm custom-btn"
           (click)="LoadMembers()"
           [(ngModel)]="userParam.orderBy"
           name="orderBy"
@@ -57,7 +68,7 @@
   </form>
 </div>
 <div class="row">
-  <div class="col-2" *ngFor="let item of members">
+  <div class="col-lg-2 col-md-4 col-sm-4" *ngFor="let item of members">
     <app-member-card [member]="item"></app-member-card>
   </div>
 </div>

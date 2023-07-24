@@ -8,3 +8,60 @@ img {
   display: inline;
   max-height: 50px;
 }
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.navbar-brand {
+  flex: 1 1 auto;
+}
+
+.navbar-nav > li {
+  flex: 1 1 auto;
+}
+
+.navbar-nav > li > a {
+  padding: 10px 15px;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-toggle {
+  padding: 10px 15px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  width: 100%;
+  border-radius: 0;
+  box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu > li > a {
+  padding: 10px 15px;
+}
+
+.dropdown-menu > li > a:hover {
+  background-color: #f5f5f5;
+}
+
+.form-control {
+  width: 100%;
+}
+
+.form-control:focus {
+  box-shadow: none;
+}

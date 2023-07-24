@@ -1,4 +1,4 @@
-<div class="card mb-4">
+<div class="card mb-4 custom-card">
   <div class="card-img-wrapper">
     <img
       [src]="member.photoUrl || 'assets/user.png'"
@@ -40,10 +40,12 @@
     </h6>
 
     <!-- <p class="card-text text-muted text-center">
-     
+
     </p> -->
   </div>
   <div class="card-footer">
-    <small class="text-muted text-center card-text">{{ member.city }}</small>
+    <small class="text-muted text-center card-text custom-text">{{
+      member.city
+    }}</small>
   </div>
 </div>

@@ -1,3 +1,9 @@
 .findMatch {
   text-align: center !important;
 }
+
+.custom-radio {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
